@@ -13,7 +13,7 @@ public class TransferSessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         // Have a 300 second (5 minute) timeout on the HTTP session
         System.out.println("session created");
-        httpSessionEvent.getSession().setMaxInactiveInterval(10);
+        httpSessionEvent.getSession().setMaxInactiveInterval(300);
     }
 
     @Override
