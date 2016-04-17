@@ -1,0 +1,24 @@
+# IntelliJ project files
+.idea
+*.iml
+out
+*.iws
+*.class
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Mac
+.DS_Store
+
+# Windows
+desktop.ini
+
+# Package Files
+*.war
+*.ear
+
+# virtual machine crash logs
+hs_err_pid*
