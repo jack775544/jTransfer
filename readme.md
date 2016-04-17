@@ -7,7 +7,7 @@ Installation
 ------------
     ant
 The resulting file will be generated in /_project_root_/out/artifacts/jTransfer/jTransfer.war
-Place this in the tomcat webapps root directory (default is _/var/www_ or _/var/www/webapp_)
+Place this in the tomcat webapps root directory (default is _/var/www_ or _/var/www/webapp_). The webapps root is defined in server.xml conf file for tomcat.
 
 Notes
 ---
