@@ -2,7 +2,6 @@ package jTransfer;
 
 import com.jcraft.jsch.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Vector;
 
 /**

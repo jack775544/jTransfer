@@ -1,7 +1,5 @@
 package jTransfer;
 
-import com.jcraft.jsch.*;
-
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -32,6 +30,7 @@ public class TransferServlet extends javax.servlet.http.HttpServlet {
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         HttpSession session = request.getSession();
+        // If the session is set up then do the request, otherwise return to login
         if (!(session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection)){
             response.sendRedirect("/");
         } else {

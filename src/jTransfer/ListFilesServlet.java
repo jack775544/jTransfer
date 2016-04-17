@@ -1,8 +1,6 @@
 package jTransfer;
 
 import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,12 +30,7 @@ public class ListFilesServlet extends HttpServlet {
             try {
                 String resp = "{\"items\": [";
                 /*
-                 * Format is [
-                 *  Filename
-                 *  Access Time
-                 *  Last Modified Time
-                 *  Size (bytes)
-                 *  File Type
+                 * Format is [filename, last access time, last modified time, size (bytes), file type]
                  */
                 for (ChannelSftp.LsEntry entry : connection.ls()){
                     String item = "{\"filename\": [";
@@ -60,10 +53,10 @@ public class ListFilesServlet extends HttpServlet {
                 resp += "]}";
                 response.getWriter().print(resp);
             } catch (Exception e) {
-                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection failed");
             }
         }  else {
-            response.getWriter().print("Connection is not valid");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection is not valid");
         }
     }
 }
