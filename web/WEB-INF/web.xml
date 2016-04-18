@@ -33,6 +33,15 @@
         <url-pattern>/ls</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetFileServlet</servlet-name>
+        <servlet-class>jTransfer.GetFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetFileServlet</servlet-name>
+        <url-pattern>/get</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>
     </listener>
