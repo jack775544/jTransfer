@@ -62,12 +62,12 @@ $(document).ready(function () {
             var filename = item[0];
             var textType = 'type';
             var img = 'img';
-            var url = 'get.php?filename=' + item[0];
+            var url = 'get?filename=' + item[0];
 
             switch (Number(type)) {
                 case 1:
                     img = 'img/icons/document.png';
-                    url = 'get.php?filename=' + filename;
+                    //url = 'get.php?filename=' + filename;
                     textType = 'file';
                     break;
                 case 2:

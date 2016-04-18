@@ -2,6 +2,10 @@ package jTransfer;
 
 import com.jcraft.jsch.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Vector;
 
 /**
@@ -41,5 +45,26 @@ public class Connection {
 
         sftpChannel.exit();
         return output;
+    }
+
+    public String get(String path) throws JSchException, SftpException, IOException {
+        Channel channel = sshSession.openChannel("sftp");
+        channel.connect();
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+        InputStream out = sftpChannel.get(path);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(out));
+        int line;
+        String result = "";
+
+        while ((line = br.read()) != -1) {
+            result += (char) line;
+        }
+        br.close();
+
+        out.close();
+        sftpChannel.exit();
+        return result;
     }
 }
