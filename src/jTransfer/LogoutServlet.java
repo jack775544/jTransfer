@@ -25,6 +25,6 @@ public class LogoutServlet extends HttpServlet {
             connection.closeConnection();
         }
         session.removeAttribute(Connection.CONNECTION_NAME);
-        response.sendRedirect("/index");
+        response.sendRedirect("./index");
     }
 }
