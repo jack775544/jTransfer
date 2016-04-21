@@ -48,7 +48,7 @@ $(document).ready(function () {
             if (r === 'ERROR: Login Failed'){
                 common.logoutTimeout();
             }
-            $.get("/pwd", function(a){
+            $.get("./pwd", function(a){
                 pwd = a;
                 $('#pwd').text(a);
                 connect(r);
