@@ -42,6 +42,24 @@
         <url-pattern>/get</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EditFileServlet</servlet-name>
+        <servlet-class>jTransfer.EditFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditFileServlet</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PwdServlet</servlet-name>
+        <servlet-class>jTransfer.PwdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PwdServlet</servlet-name>
+        <url-pattern>/pwd</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>
     </listener>

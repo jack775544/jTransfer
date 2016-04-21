@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var pwd;
+
     function buildLightbox(name, url, created, modified, size, linkname) {
         var lightbox = $('<div></div>', {id: 'lightbox'});
         var content = $('<div></div>', {class: 'container'});
@@ -14,7 +16,7 @@ $(document).ready(function () {
         $('<div>Size: ' + size + ' bytes</div>').appendTo(jumbo);
         $('<a href="' + url + '">Download</a>').appendTo(jumbo);
         $('<br>').appendTo(jumbo);
-        var url = common.buildUrl('edit.php', {filename: linkname, pwd: $('#pwd').text()});
+        var url = common.buildUrl('edit', {filename: linkname, pwd: pwd});
         $('<a href="' + url + '" target="_blank">Edit</a>').appendTo(jumbo);
 
         content.append(jumbo);
@@ -46,7 +48,12 @@ $(document).ready(function () {
             if (r === 'ERROR: Login Failed'){
                 common.logoutTimeout();
             }
-            connect(r);
+            $.get("/pwd", function(a){
+                pwd = a;
+                $('#pwd').text(a);
+                connect(r);
+
+            });
         });
     }
 

@@ -1,11 +1,6 @@
 package jTransfer;
 
 import com.jcraft.jsch.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Vector;
 
 /**
@@ -19,6 +14,7 @@ public class Connection {
 
     public Connection(String remote, String username, String password) throws SftpException, JSchException {
         sshSession = createSshSession(remote, username, password);
+        pwd = pwd();
     }
 
     private Session createSshSession(String remote, String username, String password) throws JSchException, SftpException {
@@ -30,13 +26,6 @@ public class Connection {
         session.setPassword(password);
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect();
-
-        // Set the current directory
-        Channel channel = sshSession.openChannel("sftp");
-        channel.connect();
-        ChannelSftp sftpChannel = (ChannelSftp) channel;
-        pwd = sftpChannel.pwd();
-        sftpChannel.exit();
 
         return session;
     }
@@ -123,6 +112,8 @@ public class Connection {
             return false;
         } finally {
             sftpChannel.exit();
+            // Since we changed the file location we need to change pwd
+            pwd = pwd();
         }
 
         sftpChannel.exit();
