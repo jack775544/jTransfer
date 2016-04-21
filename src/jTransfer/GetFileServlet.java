@@ -1,8 +1,6 @@
 package jTransfer;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
+import com.jcraft.jsch.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLEncoder;
+import java.util.Vector;
 
 /**
+ * Servlet for handling the get requests for the SFTP server
  * @author jack775544
  */
 @WebServlet(name = "ListFilesServlet")
@@ -27,16 +28,34 @@ public class GetFileServlet extends HttpServlet {
 
 		if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection) {
 			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
-			try {
-				String file = connection.get(request.getParameter("filename"));
-				response.setContentType("application/octet-stream");
-				response.setHeader("Content-Disposition", "filename=" + request.getParameter("filename"));
 
-				response.getWriter().print(file);
+			// Set headers
+			String path = request.getParameter("filename");
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "filename=" + URLEncoder.encode(request.getParameter("filename"), "UTF-8"));
+
+			try {
+				// Get the ssh Session
+				Session sshSession = connection.getSshSession();
+				Channel channel = sshSession.openChannel("sftp");
+				channel.connect();
+				ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+				// Get the input and output streams
+				InputStream in = sftpChannel.get(path);
+				OutputStream out = response.getOutputStream();
+
+				// Copy data from input stream to output stream
+				byte[] buffer = new byte[8192];
+				for (int length; (length = in.read(buffer)) > 0;) {
+					out.write(buffer, 0, length);
+				}
 			} catch (Exception e) {
+				// Should never happen, I hope
 				e.printStackTrace();
 			}
 		} else {
+			// Bad connection, throw 500 error
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection is not valid");
 		}
 	}

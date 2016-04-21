@@ -15,6 +15,7 @@ public class Connection {
     public static final String CONNECTION_NAME = "CONNECTION";
 
     private Session sshSession;
+    private String pwd;
 
     public Connection(String remote, String username, String password) throws SftpException, JSchException {
         sshSession = createSshSession(remote, username, password);
@@ -29,42 +30,102 @@ public class Connection {
         session.setPassword(password);
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect();
+
+        // Set the current directory
+        Channel channel = sshSession.openChannel("sftp");
+        channel.connect();
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+        pwd = sftpChannel.pwd();
+        sftpChannel.exit();
+
         return session;
+    }
+
+	/**
+     * Gets a reference to the SSH Session that is stored in the connection.
+     * Use this method with extreme care as it is easy to cause massive bugs with it.
+     *
+     * Never change the current directory of the server outside of the connection method.
+     *
+     * @return a reference to the SSH session that is stored inside of the connection.
+     */
+    public Session getSshSession(){
+        return sshSession;
     }
 
     public void closeConnection() {
         sshSession.disconnect();
     }
 
-    public Vector<ChannelSftp.LsEntry> ls() throws JSchException, SftpException {
-        Channel channel = sshSession.openChannel("sftp");
-        channel.connect();
+    public Vector<ChannelSftp.LsEntry> ls() {
+        Channel channel = null;
+        try {
+            channel = sshSession.openChannel("sftp");
+            channel.connect();
+        } catch (JSchException e) {
+            e.printStackTrace();
+            return null;
+        }
         ChannelSftp sftpChannel = (ChannelSftp) channel;
 
-        Vector output = sftpChannel.ls(sftpChannel.pwd());
+        Vector output = null;
+        try {
+            output = sftpChannel.ls(sftpChannel.pwd());
+        } catch (SftpException e) {
+            e.printStackTrace();
+        } finally {
+            sftpChannel.exit();
+        }
 
         sftpChannel.exit();
         return output;
     }
 
-    public String get(String path) throws JSchException, SftpException, IOException {
-        Channel channel = sshSession.openChannel("sftp");
-        channel.connect();
+    public String pwd() {
+        Channel channel = null;
+        try {
+            channel = sshSession.openChannel("sftp");
+            channel.connect();
+        } catch (JSchException e) {
+            e.printStackTrace();
+            return null;
+        }
+
         ChannelSftp sftpChannel = (ChannelSftp) channel;
 
-        InputStream out = sftpChannel.get(path);
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(out));
-        int line;
-        String result = "";
-
-        while ((line = br.read()) != -1) {
-            result += (char) line;
+        String output = null;
+        try {
+            output = sftpChannel.pwd();
+        } catch (SftpException e) {
+            e.printStackTrace();
+        } finally {
+            sftpChannel.exit();
         }
-        br.close();
 
-        out.close();
+        return output;
+    }
+
+    public boolean cd(String path) {
+        Channel channel;
+        try {
+            channel = sshSession.openChannel("sftp");
+            channel.connect();
+        } catch (JSchException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+        try {
+            sftpChannel.cd(path);
+        } catch (SftpException e) {
+            return false;
+        } finally {
+            sftpChannel.exit();
+        }
+
         sftpChannel.exit();
-        return result;
+        return true;
     }
 }
