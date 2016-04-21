@@ -12,13 +12,11 @@ public class TransferSessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         // Have a 300 second (5 minute) timeout on the HTTP session
-        System.out.println("session created");
         httpSessionEvent.getSession().setMaxInactiveInterval(300);
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        System.out.println("session killed");
         HttpSession session = httpSessionEvent.getSession();
         Object connectionObject = session.getAttribute(Connection.CONNECTION_NAME);
         Connection connection;

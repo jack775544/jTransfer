@@ -38,7 +38,6 @@ public class EditFileServlet extends HttpServlet {
 			String path = request.getParameter("pwd");
 
 			path = URLDecoder.decode(path, "UTF-8") + "/" + filename;
-			System.out.println(path);
 
 			try {
 				// Get the ssh Session

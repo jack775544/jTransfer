@@ -8,7 +8,7 @@
         <h1>Browser Transfer</h1>
     </div>
     <div class="col-sm-1">
-        <form method="post" action="logout.php">
+        <form method="get" action="logout">
             <input type="submit" name="logout" value="Logout" class="btn" id="logout">
         </form>
     </div>
@@ -21,7 +21,7 @@
         <button type="button" id="upload" class="btn"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>Upload
         </button>
     </div>
-    <div class="row" id="pwd">/change/this/later</div>
+    <div class="row" id="pwd"></div>
 </div>
 <div class="jumbotron files row">
     <div id="filecontainer" class="row">

@@ -8,7 +8,7 @@
         <h1>Browser Transfer</h1>
     </div>
     <div class="col-sm-1">
-        <form method="post" action="logout.php">
+        <form method="get" action="logout">
             <input type="submit" name="logout" value="Logout" class="btn" id="logout">
         </form>
     </div>
