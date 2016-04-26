@@ -69,6 +69,15 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ChangeDirectoryServlet</servlet-name>
+        <servlet-class>jTransfer.ChangeDirectoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeDirectoryServlet</servlet-name>
+        <url-pattern>/cd</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>
     </listener>

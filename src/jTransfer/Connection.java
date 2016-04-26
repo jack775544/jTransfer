@@ -14,7 +14,7 @@ public class Connection {
 
     public Connection(String remote, String username, String password) throws SftpException, JSchException {
         sshSession = createSshSession(remote, username, password);
-        pwd = pwd();
+        pwd = setPwd();
     }
 
     private Session createSshSession(String remote, String username, String password) throws JSchException, SftpException {
@@ -47,7 +47,7 @@ public class Connection {
     }
 
     public Vector<ChannelSftp.LsEntry> ls() {
-        Channel channel = null;
+        Channel channel;
         try {
             channel = sshSession.openChannel("sftp");
             channel.connect();
@@ -59,7 +59,7 @@ public class Connection {
 
         Vector output = null;
         try {
-            output = sftpChannel.ls(sftpChannel.pwd());
+            output = sftpChannel.ls(pwd());
         } catch (SftpException e) {
             e.printStackTrace();
         } finally {
@@ -71,7 +71,43 @@ public class Connection {
     }
 
     public String pwd() {
-        Channel channel = null;
+        return pwd;
+    }
+
+    public boolean cd(String path) {
+        Channel channel;
+        try {
+            channel = sshSession.openChannel("sftp");
+            channel.connect();
+        } catch (JSchException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+        try {
+            // Change directory to the pwd location then cd from there
+            System.out.println(pwd);
+            System.out.println("Path: " + path);
+            sftpChannel.cd(pwd());
+            sftpChannel.cd(path);
+            pwd = sftpChannel.pwd();
+            System.out.println(pwd);
+        } catch (SftpException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            sftpChannel.exit();
+            // Since we changed the file location we need to change pwd
+        }
+
+        sftpChannel.exit();
+        return true;
+    }
+
+    private String setPwd(){
+        Channel channel;
         try {
             channel = sshSession.openChannel("sftp");
             channel.connect();
@@ -92,31 +128,5 @@ public class Connection {
         }
 
         return output;
-    }
-
-    public boolean cd(String path) {
-        Channel channel;
-        try {
-            channel = sshSession.openChannel("sftp");
-            channel.connect();
-        } catch (JSchException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        ChannelSftp sftpChannel = (ChannelSftp) channel;
-
-        try {
-            sftpChannel.cd(path);
-        } catch (SftpException e) {
-            return false;
-        } finally {
-            sftpChannel.exit();
-            // Since we changed the file location we need to change pwd
-            pwd = pwd();
-        }
-
-        sftpChannel.exit();
-        return true;
     }
 }

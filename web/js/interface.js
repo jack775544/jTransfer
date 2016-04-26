@@ -1,3 +1,4 @@
+var ajaxConnect;
 $(document).ready(function () {
     var pwd;
 
@@ -37,7 +38,7 @@ $(document).ready(function () {
         $("#lightbox").remove();
     }
 
-    function ajaxConnect() {
+    ajaxConnect = function() {
         var itemList = $('#items');
         itemList.text("Loading....");
         $.ajax({
@@ -55,7 +56,7 @@ $(document).ready(function () {
 
             });
         });
-    }
+    };
 
     function connect(r) {
         var itemList = $('#items');
@@ -99,7 +100,10 @@ $(document).ready(function () {
         });
 
         $('.folder').click(function (e) {
-            e.preventDefault();
+            var url = common.buildUrl("./cd", {path: this.dataset.name});
+            $.get(url, function(){
+                ajaxConnect();
+            });
         });
     }
 
@@ -107,6 +111,10 @@ $(document).ready(function () {
         var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}'><img src='{6}'>{3}</a></li>";
         return tag.format(url, modified, created, filename, size, textType, img);
     }
+    
+    $('#refresh').click(function(){
+        ajaxConnect();
+    });
 
     ajaxConnect();
 });
