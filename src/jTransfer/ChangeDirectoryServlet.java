@@ -26,7 +26,6 @@ public class ChangeDirectoryServlet extends HttpServlet {
 			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
 			try {
 				String path = request.getParameter("path");
-                System.out.println(path);
                 boolean success = connection.cd(path);
 
 				if (success){
