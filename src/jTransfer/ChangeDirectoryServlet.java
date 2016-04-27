@@ -21,12 +21,13 @@ public class ChangeDirectoryServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Connection connection;
 
+		response.setContentType("text/plain");
 		if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection) {
 			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
 			try {
 				String path = request.getParameter("path");
-				System.out.println(path);
-				boolean success = connection.cd(path);
+                System.out.println(path);
+                boolean success = connection.cd(path);
 
 				if (success){
 					response.getOutputStream().print("good");

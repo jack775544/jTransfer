@@ -60,10 +60,10 @@ public class Connection {
         Vector output = null;
         try {
             output = sftpChannel.ls(pwd());
-        } catch (SftpException e) {
-            e.printStackTrace();
-        } finally {
+        } catch (Exception e) {
+            System.err.println("hit error");
             sftpChannel.exit();
+            return null;
         }
 
         sftpChannel.exit();
@@ -87,13 +87,15 @@ public class Connection {
         ChannelSftp sftpChannel = (ChannelSftp) channel;
 
         try {
-            // Change directory to the pwd location then cd from there
-            System.out.println(pwd);
-            System.out.println("Path: " + path);
-            sftpChannel.cd(pwd());
-            sftpChannel.cd(path);
-            pwd = sftpChannel.pwd();
-            System.out.println(pwd);
+            if (path.equals("")){
+                // Return to home
+                pwd = sftpChannel.pwd();
+            } else {
+                // Change directory to the pwd location then cd from there
+                sftpChannel.cd(pwd());
+                sftpChannel.cd(path);
+                pwd = sftpChannel.pwd();
+            }
         } catch (SftpException e) {
             e.printStackTrace();
             return false;

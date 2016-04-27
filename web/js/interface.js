@@ -1,6 +1,8 @@
 var ajaxConnect;
 $(document).ready(function () {
     var pwd;
+    var pushHistory = true;
+    var first = false;
 
     function buildLightbox(name, url, created, modified, size, linkname) {
         var lightbox = $('<div></div>', {id: 'lightbox'});
@@ -17,8 +19,8 @@ $(document).ready(function () {
         $('<div>Size: ' + size + ' bytes</div>').appendTo(jumbo);
         $('<a href="' + url + '">Download</a>').appendTo(jumbo);
         $('<br>').appendTo(jumbo);
-        var url = common.buildUrl('edit', {filename: linkname, pwd: pwd});
-        $('<a href="' + url + '" target="_blank">Edit</a>').appendTo(jumbo);
+        var editUrl = common.buildUrl('edit', {filename: linkname, pwd: pwd});
+        $('<a href="' + editUrl + '" target="_blank">Edit</a>').appendTo(jumbo);
 
         content.append(jumbo);
         lightbox.append(content);
@@ -41,19 +43,24 @@ $(document).ready(function () {
     ajaxConnect = function() {
         var itemList = $('#items');
         itemList.text("Loading....");
-        $.ajax({
-            type: "GET",
-            url: './ls',
-            context: document.body
-        }).done(function (r) {
-            if (r === 'ERROR: Login Failed'){
-                common.logoutTimeout();
-            }
-            $.get("./pwd", function(a){
-                pwd = a;
-                $('#pwd').text(a);
+        $.get("./pwd", function(a){
+            pwd = a;
+            $('#pwd').text(a);
+            $.get("./ls", function (r) {
+                if (pushHistory != false) {
+                    if (first == true){
+                        history.replaceState(a, "", common.buildUrl("files", {pwd: encodeURIComponent(a)}));
+                        first = false;
+                    } else {
+                        history.pushState(a, "", common.buildUrl("files", {pwd: encodeURIComponent(a)}));
+                    }
+                } else {
+                    pushHistory = true;
+                }
+                if (r === 'none'){
+                    common.logoutTimeout();
+                }
                 connect(r);
-
             });
         });
     };
@@ -80,7 +87,7 @@ $(document).ready(function () {
                     break;
                 case 2:
                     img = 'img/icons/folder.png';
-                    url = '#';
+                    url = '?pwd=' + encodeURIComponent(pwd) + "%2F" + filename;
                     textType = 'folder';
                     break;
                 default:
@@ -93,13 +100,12 @@ $(document).ready(function () {
         }
         $('.file').click(function (e) {
             e.preventDefault();
-            var url = this.href;
-            var name = this.dataset.name;
             var lightbox = buildLightbox(this.dataset.name, this.href, this.dataset.created, this.dataset.modified, this.dataset.size, this.dataset.linkname);
             $("body").append(lightbox);
         });
 
         $('.folder').click(function (e) {
+            e.preventDefault();
             var url = common.buildUrl("./cd", {path: this.dataset.name});
             $.get(url, function(){
                 ajaxConnect();
@@ -116,5 +122,22 @@ $(document).ready(function () {
         ajaxConnect();
     });
 
-    ajaxConnect();
+    window.addEventListener('popstate', function(e) {
+        pushHistory = false;
+        var url = common.buildUrl("./cd", {path: e.state});
+        $.get(url, function(){
+            ajaxConnect();
+        });
+    });
+
+    var param = common.getParameters['pwd'];
+    if (param != undefined){
+        var url = common.buildUrl("./cd", {path: param});
+        $.get(url, function(){
+            ajaxConnect();
+        });
+    } else {
+        first = true;
+        ajaxConnect();
+    }
 });
