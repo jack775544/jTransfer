@@ -20,7 +20,7 @@ public class TransferServlet extends javax.servlet.http.HttpServlet {
             try {
                 connection = new Connection(remote, username, password);
             } catch (Exception e) {
-                e.printStackTrace();
+                response.sendRedirect("./logout");
                 return;
             }
             session.setAttribute(Connection.CONNECTION_NAME, connection);

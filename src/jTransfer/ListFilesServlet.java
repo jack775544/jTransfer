@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Vector;
 
 /**
  * @author jack775544
@@ -23,8 +24,6 @@ public class ListFilesServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Connection connection;
 
-        response.setContentType("text/json");
-
         if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection){
             connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
             try {
@@ -32,7 +31,13 @@ public class ListFilesServlet extends HttpServlet {
                 /*
                  * Format is [filename, last access time, last modified time, size (bytes), file type]
                  */
-                for (ChannelSftp.LsEntry entry : connection.ls()){
+                Vector<ChannelSftp.LsEntry> entries = connection.ls();
+                if (entries == null){
+                    response.getWriter().print("none");
+                    return;
+                }
+                response.setContentType("text/json");
+                for (ChannelSftp.LsEntry entry : entries){
                     String item = "{\"filename\": [";
                     item += "\"" + entry.getFilename() + "\", ";
                     item += "\"" + entry.getAttrs().getATime() + "\", ";

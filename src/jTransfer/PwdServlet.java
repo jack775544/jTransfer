@@ -20,6 +20,7 @@ public class PwdServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Connection connection;
+		response.setContentType("text/plain");
 		if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection){
 			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
 			response.getWriter().print(connection.pwd());
