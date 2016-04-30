@@ -18,8 +18,13 @@
         <button type="button" id="refresh" class="btn"><span class="glyphicon glyphicon-refresh"
                                                              aria-hidden="true"></span>Refresh
         </button>
-        <button type="button" id="upload" class="btn"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>Upload
-        </button>
+        <%--<button type="button" id="upload" class="btn"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>Upload
+        </button>--%>
+        <form action="put" method="post" enctype="multipart/form-data">
+            <input type="text"  name="description"/>
+            <input type="file" class="btn" name="file"/>
+            <input type="submit" class="btn"/>
+        </form>
     </div>
     <div class="row" id="pwd"></div>
 </div>
