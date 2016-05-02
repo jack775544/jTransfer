@@ -17,6 +17,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        MySqlLogger.logGeneral("hello world");
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
