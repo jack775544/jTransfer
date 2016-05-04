@@ -10,13 +10,13 @@ import java.util.Date;
  */
 public class MySqlLogger {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/";
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/";
 
     // Database credentials
-    // TODO: make these gud
-    static final String USER = "";
-    static final String PASS = "";
+    // TODO: Change the username and password for a production environment
+    private static final String USER = "jtransfer";
+    private static final String PASS = "pass";
 
 
     public static boolean logGeneral(String item){
@@ -29,7 +29,7 @@ public class MySqlLogger {
             connection = DriverManager.getConnection(DB_URL,USER,PASS);
             connection.setCatalog("jtransfer");
 
-            String sql = "INSERT INTO logging_general (`id`, `timestamp`, `log`) VALUES (NULL, UNIX_TIMESTAMP(), ?)";
+            String sql = "INSERT INTO jtransfer.logging_general (`id`, `timestamp`, `log`) VALUES (NULL, UNIX_TIMESTAMP(), ?)";
             addLog = connection.prepareStatement(sql);
             addLog.setString(1, item);
             addLog.executeUpdate();
@@ -39,7 +39,7 @@ public class MySqlLogger {
         } catch(Exception e){
             // Print the message to stdout instead of to the database then exit
             System.out.println(new Date().getTime() + ": " + item);
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         } finally {
             //finally block used to close resources
