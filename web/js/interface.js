@@ -78,6 +78,7 @@ $(document).ready(function () {
             var textType = 'type';
             var img = 'img';
             var url = 'get?filename=' + item[0];
+            var path = pwd + "/" + filename;
 
             switch (Number(type)) {
                 case 1:
@@ -96,7 +97,7 @@ $(document).ready(function () {
                     textType = 'other';
                     break;
             }
-            itemList.append(buildListItem(url, modified, created, filename, size, textType, img));
+            itemList.append(buildListItem(url, modified, created, filename, size, textType, img, path));
         }
         $('.file').click(function (e) {
             e.preventDefault();
@@ -106,16 +107,16 @@ $(document).ready(function () {
 
         $('.folder').click(function (e) {
             e.preventDefault();
-            var url = common.buildUrl("./cd", {path: this.dataset.name});
+            var url = common.buildUrl("./cd", {path: this.dataset.path});
             $.get(url, function(){
                 ajaxConnect();
             });
         });
     }
 
-    function buildListItem(url, modified, created, filename, size, textType, img) {
-        var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}'><img src='{6}'>{3}</a></li>";
-        return tag.format(url, modified, created, filename, size, textType, img);
+    function buildListItem(url, modified, created, filename, size, textType, img, path) {
+        var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}' data-path='{7}'><img src='{6}'>{3}</a></li>";
+        return tag.format(url, modified, created, filename, size, textType, img, path);
     }
     
     $('#refresh').click(function(){

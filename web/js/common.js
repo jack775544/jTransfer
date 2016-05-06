@@ -32,6 +32,10 @@ common.getParameters = function(){
     return p;
 };
 
+common.getURLParameter = function(url, name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
 /**
  * Builds a URL from a base and a map of params
  * @param base
