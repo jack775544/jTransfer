@@ -26,11 +26,10 @@ public class UploadFileServlet extends HttpServlet {
 		if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection){
 			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
 		} else {
-			response.sendRedirect("/index");
 			return;
 		}
 
-        String pwd = request.getParameter("filename");
+        String pwd = request.getParameter("path");
 
 		ChannelSftp sftpChannel = connection.getSftpChannel();
 
@@ -44,6 +43,7 @@ public class UploadFileServlet extends HttpServlet {
 		try {
 			out = sftpChannel.put(pwd + getFilename(file));
 		} catch (SftpException e) {
+            e.printStackTrace();
 			MySqlLogger.logGeneral(e.getMessage(), session.getId());
 			return;
 		}

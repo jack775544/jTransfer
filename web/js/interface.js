@@ -61,6 +61,7 @@ $(document).ready(function () {
                 //common.logoutTimeout();
             } else {
                 pwd = r.path;
+                document.getElementById("uploadForm").action = common.buildUrl('./put', {path: pwd});
                 history.replaceState(r.path, "", common.buildUrl("files", {pwd: r.path}));
                 connect(r);
             }

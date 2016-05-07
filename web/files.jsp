@@ -20,8 +20,7 @@
         </button>
         <%--<button type="button" id="upload" class="btn"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>Upload
         </button>--%>
-        <form action="put" method="post" enctype="multipart/form-data">
-            <input type="text"  name="description"/>
+        <form id="uploadForm" action="put" method="post" enctype="multipart/form-data">
             <input type="file" class="btn" name="file"/>
             <input type="submit" class="btn"/>
         </form>
