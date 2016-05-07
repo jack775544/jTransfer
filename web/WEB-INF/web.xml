@@ -69,16 +69,7 @@
         <url-pattern>/pwd</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>ChangeDirectoryServlet</servlet-name>
-        <servlet-class>jTransfer.ChangeDirectoryServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ChangeDirectoryServlet</servlet-name>
-        <url-pattern>/cd</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
+        <servlet>
         <servlet-name>UploadFileServlet</servlet-name>
         <servlet-class>jTransfer.UploadFileServlet</servlet-class>
     </servlet>
