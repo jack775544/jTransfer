@@ -13,11 +13,12 @@ import java.io.IOException;
 @WebServlet(name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MySqlLogger.logGeneral("hello world");
+        MySqlLogger.logGeneral("hello session", request.getSession().getId());
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

@@ -60,4 +60,47 @@ public class MySqlLogger {
         }
         return true;
     }
+
+    public static boolean logGeneral(String item, String session_id){
+        java.sql.Connection connection = null;
+        PreparedStatement addLog = null;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+
+            connection = DriverManager.getConnection(DB_URL,USER,PASS);
+            connection.setCatalog("jtransfer");
+
+            String sql = "INSERT INTO jtransfer.logging_session (`id`, `timestamp`, `session_id`, `log`) VALUES (NULL, UNIX_TIMESTAMP(), ?, ?)";
+            addLog = connection.prepareStatement(sql);
+            addLog.setString(1, session_id);
+            addLog.setString(2, item);
+            addLog.executeUpdate();
+
+            addLog.close();
+            connection.close();
+        } catch(Exception e){
+            // Print the message to stdout instead of to the database then exit
+            System.out.println(new Date().getTime() + ": " + item);
+            //e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (addLog != null) {
+                    addLog.close();
+                }
+            } catch (SQLException se2) {
+                // We can't prevent this error, so just fail as gracefully as possible
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException se) {
+                // We can't prevent this error, so just fail as gracefully as possible
+            }
+        }
+        return true;
+    }
 }

@@ -7,3 +7,9 @@ CREATE TABLE `jtransfer`.`logging_general` (
   `log` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
+CREATE TABLE jtransfer.logging_session(
+  id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  timestamp BIGINT(20) NOT NULL,
+  session_id VARCHAR(32) NOT NULL,
+  log VARCHAR(200)
+) ENGINE = InnoDB;
