@@ -1,8 +1,6 @@
-var ajaxConnect;
 $(document).ready(function () {
+    var ajaxConnect;
     var pwd;
-    var pushHistory = true;
-    var first = false;
 
     function buildLightbox(name, url, created, modified, size, linkname) {
         var lightbox = $('<div></div>', {id: 'lightbox'});
@@ -39,31 +37,35 @@ $(document).ready(function () {
         e.stopPropagation();
         $("#lightbox").remove();
     }
-
-    ajaxConnect = function() {
+    
+    ajaxConnect = function(){
         var itemList = $('#items');
         itemList.text("Loading....");
-        $.get("./pwd", function(a){
-            pwd = a;
-            $('#pwd').text(a);
-            $.get("./ls", function (r) {
-                if (pushHistory != false) {
-                    if (first == true){
-                        history.replaceState(a, "", common.buildUrl("files", {pwd: encodeURIComponent(a)}));
-                        first = false;
-                    } else {
-                        history.pushState(a, "", common.buildUrl("files", {pwd: encodeURIComponent(a)}));
-                    }
-                } else {
-                    pushHistory = true;
-                }
-                if (r === 'none'){
-                    common.logoutTimeout();
-                }
-                connect(r);
+
+        var params = common.getParameters();
+        if (params.pwd === undefined){
+            $.get("./pwd", function(a) {
+                pwd = a;
+                history.replaceState(a, "", common.buildUrl("files", {pwd: a}));
+                getFileList();
             });
-        });
+        } else {
+            pwd = decodeURIComponent(params.pwd);
+            getFileList();
+        }
     };
+
+    function getFileList(){
+        $.get(common.buildUrl("./ls", {path: pwd}), function (r) {
+            if (r === 'none'){
+                //common.logoutTimeout();
+            } else {
+                pwd = r.path;
+                history.replaceState(r.path, "", common.buildUrl("files", {pwd: r.path}));
+                connect(r);
+            }
+        });
+    }
 
     function connect(r) {
         var itemList = $('#items');
@@ -77,8 +79,9 @@ $(document).ready(function () {
             var filename = item[0];
             var textType = 'type';
             var img = 'img';
-            var url = 'get?filename=' + item[0];
             var path = pwd + "/" + filename;
+            //var url = 'get?filename=' + path;
+            var url = common.buildUrl('./get', {filename: path, name: filename});
 
             switch (Number(type)) {
                 case 1:
@@ -107,10 +110,8 @@ $(document).ready(function () {
 
         $('.folder').click(function (e) {
             e.preventDefault();
-            var url = common.buildUrl("./cd", {path: this.dataset.path});
-            $.get(url, function(){
-                ajaxConnect();
-            });
+            history.pushState(this.dataset.path, "", common.buildUrl("files", {pwd: this.dataset.path}));
+            ajaxConnect();
         });
     }
 
@@ -124,21 +125,8 @@ $(document).ready(function () {
     });
 
     window.addEventListener('popstate', function(e) {
-        pushHistory = false;
-        var url = common.buildUrl("./cd", {path: e.state});
-        $.get(url, function(){
-            ajaxConnect();
-        });
-    });
-
-    var param = common.getParameters['pwd'];
-    if (param != undefined){
-        var url = common.buildUrl("./cd", {path: param});
-        $.get(url, function(){
-            ajaxConnect();
-        });
-    } else {
-        first = true;
         ajaxConnect();
-    }
+    });
+    
+    ajaxConnect();
 });

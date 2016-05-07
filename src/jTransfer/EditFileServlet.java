@@ -41,10 +41,7 @@ public class EditFileServlet extends HttpServlet {
 
 			try {
 				// Get the ssh Session
-				Session sshSession = connection.getSshSession();
-				Channel channel = sshSession.openChannel("sftp");
-				channel.connect();
-				ChannelSftp sftpChannel = (ChannelSftp) channel;
+				ChannelSftp sftpChannel = connection.getSftpChannel();
 
 				// Get the input and output streams
 				InputStream in = sftpChannel.get(path);
@@ -57,7 +54,7 @@ public class EditFileServlet extends HttpServlet {
 				request.getRequestDispatcher("/edit.jsp").forward(request, response);
 			} catch (Exception e) {
 				// Should never happen, I hope
-				e.printStackTrace();
+				MySqlLogger.logGeneral(e.getMessage(), session.getId());
 			}
 		} else {
 			// Bad connection, throw 500 error

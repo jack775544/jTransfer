@@ -30,22 +30,12 @@ public class UploadFileServlet extends HttpServlet {
 			return;
 		}
 
-		Session sshSession = connection.getSshSession();
-		Channel channel;
-		try {
-			channel = sshSession.openChannel("sftp");
-			channel.connect();
-		} catch (JSchException e) {
-			sshSession.disconnect();
-			response.sendRedirect("/index");
-			return;
-		}
+        String pwd = request.getParameter("filename");
 
-		ChannelSftp sftpChannel = (ChannelSftp) channel;
+		ChannelSftp sftpChannel = connection.getSftpChannel();
 
 		Collection<Part> parts = request.getParts();
 		HashMap<String, Part> partMap = getPartMap(parts);
-		String pwd = connection.pwd();
 		if (!pwd.endsWith("/")){
 			pwd = pwd + "/";
 		}
@@ -54,7 +44,7 @@ public class UploadFileServlet extends HttpServlet {
 		try {
 			out = sftpChannel.put(pwd + getFilename(file));
 		} catch (SftpException e) {
-			e.printStackTrace();
+			MySqlLogger.logGeneral(e.getMessage(), session.getId());
 			return;
 		}
 
@@ -80,7 +70,7 @@ public class UploadFileServlet extends HttpServlet {
 				return tokenizer.nextToken();
 			}
 		}
-		return "";
+		return null;
 	}
 
 	private static HashMap<String, Part> getPartMap(Collection<Part> parts){

@@ -52,21 +52,21 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>PwdServlet</servlet-name>
-        <servlet-class>jTransfer.PwdServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PwdServlet</servlet-name>
-        <url-pattern>/pwd</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>jTransfer.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PwdServlet</servlet-name>
+        <servlet-class>jTransfer.PwdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PwdServlet</servlet-name>
+        <url-pattern>/pwd</url-pattern>
     </servlet-mapping>
 
     <servlet>

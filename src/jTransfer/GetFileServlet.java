@@ -32,14 +32,11 @@ public class GetFileServlet extends HttpServlet {
 			// Set headers
 			String path = request.getParameter("filename");
 			response.setContentType("application/octet-stream");
-			response.setHeader("Content-Disposition", "filename=" + URLEncoder.encode(request.getParameter("filename"), "UTF-8"));
+			response.setHeader("Content-Disposition", "filename=" + URLEncoder.encode(request.getParameter("name"), "UTF-8"));
 
 			try {
-				// Get the ssh Session
-				Session sshSession = connection.getSshSession();
-				Channel channel = sshSession.openChannel("sftp");
-				channel.connect();
-				ChannelSftp sftpChannel = (ChannelSftp) channel;
+				// Get the SFTP Channel
+				ChannelSftp sftpChannel = connection.getSftpChannel();
 
 				// Get the input and output streams
 				InputStream in = sftpChannel.get(path);
@@ -52,7 +49,7 @@ public class GetFileServlet extends HttpServlet {
 				}
 			} catch (Exception e) {
 				// Should never happen, I hope
-				e.printStackTrace();
+				MySqlLogger.logGeneral(e.getMessage(), session.getId());
 			}
 		} else {
 			// Bad connection, throw 500 error

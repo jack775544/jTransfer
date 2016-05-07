@@ -31,7 +31,10 @@ public class ListFilesServlet extends HttpServlet {
                 /*
                  * Format is [filename, last access time, last modified time, size (bytes), file type]
                  */
-                Vector<ChannelSftp.LsEntry> entries = connection.ls();
+                String path = request.getParameter("path");
+                path = connection.getFolderPath(path);
+
+                Vector<ChannelSftp.LsEntry> entries = connection.ls(path);
                 if (entries == null){
                     response.getWriter().print("none");
                     return;
@@ -55,7 +58,7 @@ public class ListFilesServlet extends HttpServlet {
                     resp += item;
                 }
                 resp = resp.substring(0, resp.length() - 2);
-                resp += "]}";
+                resp += "],\"path\": \"" + path + "\"}";
                 response.getWriter().print(resp);
             } catch (Exception e) {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection failed");

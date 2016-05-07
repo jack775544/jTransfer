@@ -13,19 +13,19 @@ import java.io.IOException;
  */
 @WebServlet(name = "PwdServlet")
 public class PwdServlet extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Connection connection;
-		response.setContentType("text/plain");
-		if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection){
-			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
-			response.getWriter().print(connection.pwd());
-		} else {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection is not valid");
-		}
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Connection connection;
+        response.setContentType("text/plain");
+        if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection){
+            connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
+            response.getWriter().print(connection.pwd());
+        } else {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection is not valid");
+        }
+    }
 }
