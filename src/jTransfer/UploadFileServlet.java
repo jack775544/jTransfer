@@ -53,6 +53,8 @@ public class UploadFileServlet extends HttpServlet {
 			out.write(buffer, 0, length);
 		}
 
+        MySqlLogger.logGeneral("put triggered", session.getId());
+
         try {
             // Need to close and reopen the channel due to a bug in Jsch
             connection.createChannel();

@@ -47,6 +47,7 @@ public class GetFileServlet extends HttpServlet {
 				for (int length; (length = in.read(buffer)) > 0;) {
 					out.write(buffer, 0, length);
 				}
+				MySqlLogger.logGeneral("get triggered", session.getId());
 			} catch (Exception e) {
 				// Should never happen, I hope
 				MySqlLogger.logGeneral(e.getMessage(), session.getId());
