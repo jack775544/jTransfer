@@ -32,7 +32,9 @@ public class ListFilesServlet extends HttpServlet {
                  * Format is [filename, last access time, last modified time, size (bytes), file type]
                  */
                 String path = request.getParameter("path");
+                System.out.println(path);
                 path = connection.getFolderPath(path);
+                System.out.println(path);
 
                 Vector<ChannelSftp.LsEntry> entries = connection.ls(path);
                 if (entries == null){

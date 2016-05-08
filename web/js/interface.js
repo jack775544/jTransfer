@@ -114,7 +114,35 @@ $(document).ready(function () {
             history.pushState(this.dataset.path, "", common.buildUrl("files", {pwd: this.dataset.path}));
             ajaxConnect();
         });
+
     }
+
+    var form = document.getElementById('uploadForm');
+    var fileSelect = document.getElementById('file-select');
+    var uploadButton = document.getElementById('upload-button');
+
+    form.onsubmit = function(e) {
+        e.preventDefault();
+
+        // Update button text.
+        uploadButton.innerHTML = 'Uploading...';
+        var files = fileSelect.files;
+        var formData = new FormData();
+        formData.append('file', files[0]);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action, true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // File(s) uploaded.
+                uploadButton.innerHTML = 'Upload';
+            } else {
+                console.log('An error occurred!');
+            }
+        };
+        xhr.send(formData);
+    };
 
     function buildListItem(url, modified, created, filename, size, textType, img, path) {
         var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}' data-path='{7}'><img src='{6}'>{3}</a></li>";

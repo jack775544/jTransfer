@@ -23,6 +23,14 @@ public class Connection {
         session.connect();
         sshSession = session;
 
+        createChannel();
+    }
+
+    public void createChannel() throws SftpException, JSchException{
+        if (sftpChannel != null){
+            sftpChannel.disconnect();
+        }
+
         Channel channel;
         channel = sshSession.openChannel("sftp");
         channel.connect();

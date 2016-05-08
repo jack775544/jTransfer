@@ -20,9 +20,13 @@
         </button>
         <%--<button type="button" id="upload" class="btn"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>Upload
         </button>--%>
-        <form id="uploadForm" action="put" method="post" enctype="multipart/form-data">
+        <%--<form id="uploadForm" action="put" method="post" enctype="multipart/form-data">
             <input type="file" class="btn" name="file"/>
-            <input type="submit" class="btn"/>
+            <input type="submit" class="btn" id="uploadButton"/>
+        </form>--%>
+        <form id="uploadForm" action="./put" method="POST">
+            <input type="file" id="file-select" name="file"/>
+            <button type="submit" id="upload-button">Upload</button>
         </form>
     </div>
     <div class="row" id="pwd"></div>

@@ -43,7 +43,6 @@ public class UploadFileServlet extends HttpServlet {
 		try {
 			out = sftpChannel.put(pwd + getFilename(file));
 		} catch (SftpException e) {
-            e.printStackTrace();
 			MySqlLogger.logGeneral(e.getMessage(), session.getId());
 			return;
 		}
@@ -53,7 +52,16 @@ public class UploadFileServlet extends HttpServlet {
 		for (int length; (length = in.read(buffer)) > 0;) {
 			out.write(buffer, 0, length);
 		}
-	}
+
+        try {
+            // Need to close and reopen the channel due to a bug in Jsch
+            connection.createChannel();
+        } catch (SftpException e) {
+            MySqlLogger.logGeneral(e.getMessage(), session.getId());
+        } catch (JSchException e) {
+            MySqlLogger.logGeneral(e.getMessage(), session.getId());
+        }
+    }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
