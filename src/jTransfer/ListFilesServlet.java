@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Vector;
 
 /**
@@ -31,9 +32,10 @@ public class ListFilesServlet extends HttpServlet {
                 /*
                  * Format is [filename, last access time, last modified time, size (bytes), file type]
                  */
-                String path = request.getParameter("path");
-                path = connection.getFolderPath(path);
-                MySqlLogger.logGeneral("ls triggered", session.getId());
+                String oldPath = request.getParameter("path");
+                oldPath = URLDecoder.decode(oldPath, "UTF-8");
+                String path = connection.getFolderPath(oldPath);
+                MySqlLogger.logGeneral("ls. Path: '" + path + "' Request: '" + oldPath + "'", session.getId());
 
                 Vector<ChannelSftp.LsEntry> entries = connection.ls(path);
                 if (entries == null){

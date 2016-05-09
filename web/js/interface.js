@@ -56,11 +56,12 @@ $(document).ready(function () {
     };
 
     function getFileList(){
-        $.get(common.buildUrl("./ls", {path: pwd}), function (r) {
+        $.get(common.buildUrl("./ls", {path: encodeURI(pwd)}), function (r) {
             if (r === 'none'){
                 //common.logoutTimeout();
             } else {
                 pwd = r.path;
+                $('#pwd').text(pwd);
                 document.getElementById("uploadForm").action = common.buildUrl('./put', {path: pwd});
                 history.replaceState(r.path, "", common.buildUrl("files", {pwd: r.path}));
                 connect(r);
@@ -137,6 +138,7 @@ $(document).ready(function () {
             if (xhr.status === 200) {
                 // File(s) uploaded.
                 uploadButton.innerHTML = 'Upload';
+                ajaxConnect();
             } else {
                 console.log('An error occurred!');
             }
