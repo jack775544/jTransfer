@@ -102,8 +102,10 @@ $(document).ready(function () {
                     textType = 'other';
                     break;
             }
+
             itemList.append(buildListItem(url, modified, created, filename, size, textType, img, path));
         }
+
         $('.file').click(function (e) {
             e.preventDefault();
             var lightbox = buildLightbox(this.dataset.name, this.href, this.dataset.created, this.dataset.modified, this.dataset.size, this.dataset.linkname);
@@ -116,6 +118,16 @@ $(document).ready(function () {
             ajaxConnect();
         });
 
+        var upButton = $('#up');
+        upButton.attr('href', common.buildUrl('./files', {pwd: pwd + '/..'}));
+        document.getElementById('up').dataset.path = pwd + '/..';
+        upButton.unbind('click');
+
+        upButton.click(function (e) {
+            e.preventDefault();
+            history.pushState(this.dataset.path, "", common.buildUrl("files", {pwd: this.dataset.path}));
+            ajaxConnect();
+        })
     }
 
     var form = document.getElementById('uploadForm');

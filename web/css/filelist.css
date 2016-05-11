@@ -161,6 +161,14 @@ body > div:last-of-type {
     width: 30%;
 }
 
+#file-select{
+    display: inline;
+}
+
+#uploadForm {
+    display: inline;
+}
+
 @media screen and (max-width: 767px) {
     #editoptions > select {
         width: 100%;

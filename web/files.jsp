@@ -18,18 +18,15 @@
         <button type="button" id="refresh" class="btn"><span class="glyphicon glyphicon-refresh"
                                                              aria-hidden="true"></span>Refresh
         </button>
-        <%--<button type="button" id="upload" class="btn"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>Upload
-        </button>--%>
-        <%--<form id="uploadForm" action="put" method="post" enctype="multipart/form-data">
-            <input type="file" class="btn" name="file"/>
-            <input type="submit" class="btn" id="uploadButton"/>
-        </form>--%>
         <form id="uploadForm" action="./put" method="POST">
             <input type="file" id="file-select" name="file"/>
             <button type="submit" id="upload-button">Upload</button>
         </form>
     </div>
-    <div class="row" id="pwd"></div>
+    <div class="row">
+        <a class="btn" id="up">Up</a>
+        <span id="pwd"></span>
+    </div>
 </div>
 <div class="jumbotron files row">
     <div id="filecontainer" class="row">
