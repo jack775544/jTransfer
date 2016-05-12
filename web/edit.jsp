@@ -30,7 +30,7 @@
 </div>
 <div class="jumbotron files row" id="editjumbo">
     <div class="row" id="editrow">
-        <pre id="editor">${file}</pre>
+        <pre id="editor"></pre>
     </div>
 </div>
 
