@@ -27,38 +27,6 @@ public class EditFileServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Connection connection;
-
-		if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection) {
-			connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
-
-			// Set headers
-			String filename = request.getParameter("filename");
-			String path = request.getParameter("pwd");
-
-			path = URLDecoder.decode(path, "UTF-8") + "/" + filename;
-
-			try {
-				// Get the ssh Session
-				ChannelSftp sftpChannel = connection.getSftpChannel();
-
-				// Get the input and output streams
-				InputStream in = sftpChannel.get(path);
-				String file = "";
-				int character;
-				while ((character = in.read()) != -1){
-					file += (char) character;
-				}
-				request.setAttribute("file", file);
-				request.getRequestDispatcher("/edit.jsp").forward(request, response);
-			} catch (Exception e) {
-				// Should never happen, I hope
-				MySqlLogger.logGeneral(e.getMessage(), session.getId());
-			}
-		} else {
-			// Bad connection, throw 500 error
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Connection is not valid");
-		}
+		request.getRequestDispatcher("/edit.jsp").forward(request, response);
 	}
 }
