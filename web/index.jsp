@@ -6,7 +6,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1>Browser Transfer</h1>
-        <form action="files" method="post" id="loginform">
+        <form action="login" method="post" id="loginform">
             <div class="form-group">
                 <label for="remote">SFTP Server Address:</label>
                 <input type="text" name="remote" id="remote" value="remote.labs.eait.uq.edu.au" class="form-control"/><br>

@@ -1,9 +1,5 @@
 package jTransfer;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.Session;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 /**
  * Edit file servlet
@@ -27,6 +19,12 @@ public class EditFileServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/edit.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		// If the session is set up then do the request, otherwise return to login
+		if (!(session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection)){
+			response.sendRedirect("./");
+		} else {
+            request.getRequestDispatcher("/edit.jsp").forward(request, response);
+        }
 	}
 }
