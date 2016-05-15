@@ -1,6 +1,8 @@
 package jTransfer;
 
 import com.jcraft.jsch.*;
+
+import java.io.OutputStream;
 import java.util.Vector;
 
 /**
@@ -51,6 +53,10 @@ public class Connection {
      */
     public ChannelSftp getSftpChannel(){
         return sftpChannel;
+    }
+
+    public Session getSshSession(){
+        return sshSession;
     }
 
     public void closeConnection() {
