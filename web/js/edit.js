@@ -2,6 +2,22 @@ $(document).ready(function(){
     var params = common.getParameters();
     var filename = decodeURIComponent(params.filename);
     var location = decodeURIComponent(params.pwd) + '/' + filename;
+    $.ajax({
+        type: "POST",
+        url: './exec',
+        mimeType: 'text/plain',
+        data: {"pwd": encodeURIComponent(location)},
+        success: function (data) {
+            var args = data.split(";");
+            var type  = args[1].trim().split("=");
+
+            console.log(type[1]);
+
+            if (type[1] == 'binary') {
+                alert('This is a binary file');
+            }
+        }
+    });
     $.get(common.buildUrl('get', {filename: location, name:filename}), function (e) {
         $('#editor').text(e);
         initEditor();

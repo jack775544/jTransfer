@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLDecoder;
 
 /**
  * @author jack775544
@@ -18,10 +19,6 @@ import java.io.IOException;
 @WebServlet(name = "ExecServlet")
 public class ExecServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection connection;
         HttpSession session = request.getSession();
 
@@ -30,8 +27,8 @@ public class ExecServlet extends HttpServlet {
         }
 
         connection = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
-        Session sshSession = connection.getSshSession();
 
+        Session sshSession = connection.getSshSession();
         ChannelExec execChannel;
         try {
             execChannel = (ChannelExec) sshSession.openChannel("exec");
@@ -40,8 +37,13 @@ public class ExecServlet extends HttpServlet {
             return;
         }
 
+        String pwd = URLDecoder.decode(request.getParameter("pwd"), "UTF-8");
+        if (pwd == null){
+            return;
+        }
+
         execChannel.setOutputStream(response.getOutputStream());
-        execChannel.setCommand("ls -al");
+        execChannel.setCommand("file -ib " + pwd);
         try {
             synchronized (execChannel) {
                 try {
@@ -54,5 +56,8 @@ public class ExecServlet extends HttpServlet {
         } catch (JSchException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }
