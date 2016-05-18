@@ -2,11 +2,12 @@ $(document).ready(function(){
     var params = common.getParameters();
     var filename = decodeURIComponent(params.filename);
     var location = decodeURIComponent(params.pwd) + '/' + filename;
+    console.log(location);
     $.ajax({
         type: "POST",
         url: './exec',
         mimeType: 'text/plain',
-        data: {"pwd": encodeURIComponent(location)},
+        data: {"pwd": location},
         success: function (data) {
             var args = data.split(";");
             var type  = args[1].trim().split("=");
@@ -18,6 +19,8 @@ $(document).ready(function(){
             }
         }
     });
+    console.log(location);
+    console.log(filename);
     $.get(common.buildUrl('get', {filename: location, name:filename}), function (e) {
         $('#editor').text(e);
         initEditor();

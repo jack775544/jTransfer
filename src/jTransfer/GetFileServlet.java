@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Vector;
 
@@ -31,6 +32,7 @@ public class GetFileServlet extends HttpServlet {
 
 			// Set headers
 			String path = request.getParameter("filename");
+			path = URLDecoder.decode(path, "UTF-8");
 			response.setContentType("application/octet-stream");
 			response.setHeader("Content-Disposition", "filename=" + URLEncoder.encode(request.getParameter("name"), "UTF-8"));
 

@@ -83,8 +83,9 @@ $(document).ready(function () {
             var img = 'img';
             var path = pwd + "/" + filename;
             //var url = 'get?filename=' + path;
+            console.log(path);
+            console.log(filename);
             var url = common.buildUrl('./get', {filename: path, name: filename});
-
             switch (Number(type)) {
                 case 1:
                     img = 'img/icons/document.png';

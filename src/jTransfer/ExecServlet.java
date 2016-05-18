@@ -38,12 +38,13 @@ public class ExecServlet extends HttpServlet {
         }
 
         String pwd = URLDecoder.decode(request.getParameter("pwd"), "UTF-8");
+        MySqlLogger.logGeneral("Old: " + request.getParameter("pwd") + " New: " + pwd, session.getId());
         if (pwd == null){
             return;
         }
 
         execChannel.setOutputStream(response.getOutputStream());
-        execChannel.setCommand("file -ib " + pwd);
+        execChannel.setCommand("file -ib \"" + pwd + "\"");
         try {
             synchronized (execChannel) {
                 try {
