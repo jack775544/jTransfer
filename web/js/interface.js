@@ -2,7 +2,7 @@ $(document).ready(function () {
     var ajaxConnect;
     var pwd;
 
-    function buildLightbox(name, url, created, modified, size, linkname, rmUrl) {
+    function buildLightbox(name, url, created, modified, size, linkname, rmUrl, path) {
         var lightbox = $('<div></div>', {id: 'lightbox'});
         var content = $('<div></div>', {class: 'container'});
         var jumbo = $('<div></div>', {class: 'jumbotron'});
@@ -26,9 +26,10 @@ $(document).ready(function () {
 
         var changeDiv = $('<div></div>').appendTo(jumbo);
         var deleteLink = $('<a href="' + rmUrl + '" id="delete">Delete</a>');
-        var renameLink = $('<a href="' + editUrl + '" target="_blank">Rename</a>');
+        var renameLink = $('<a href="#" target="_blank" data-path="' + path + '">Rename</a>');
 
         deleteLink.click(rmClick);
+        renameLink.click(renameClick);
 
         deleteLink.appendTo(changeDiv);
         $('<span> | </span>').appendTo(changeDiv);
@@ -56,7 +57,6 @@ $(document).ready(function () {
 
     function rmClick(e){
         e.preventDefault();
-        console.log(this.href);
         var confirmation = confirm("Delete this file?");
         if (confirmation != true) {
             return;
@@ -65,6 +65,20 @@ $(document).ready(function () {
             $("#lightbox").remove();
             ajaxConnect();
         })
+    }
+
+    function renameClick(e){
+        e.preventDefault();
+        var newName = prompt("Enter the new file name");
+        var altPwd = pwd;
+        if (altPwd.slice(-1) != '/'){
+            altPwd = altPwd + '/';
+        }
+        newName = altPwd + newName;
+        $.get(common.buildUrl('./rename', {filename: this.dataset.path, newname: newName}), function(){
+            $("#lightbox").remove();
+            ajaxConnect();
+        });
     }
     
     ajaxConnect = function(){
@@ -112,8 +126,6 @@ $(document).ready(function () {
             var img = 'img';
             var path = pwd + "/" + filename;
             //var url = 'get?filename=' + path;
-            console.log(path);
-            console.log(filename);
             var url = common.buildUrl('./get', {filename: path, name: filename});
             var rmUrl = common.buildUrl('./rm', {filename: path, name: filename});
             switch (Number(type)) {
@@ -141,7 +153,7 @@ $(document).ready(function () {
 
         $('.file').click(function (e) {
             e.preventDefault();
-            var lightbox = buildLightbox(this.dataset.name, this.href, this.dataset.created, this.dataset.modified, this.dataset.size, this.dataset.linkname, this.dataset.rmlink);
+            var lightbox = buildLightbox(this.dataset.name, this.href, this.dataset.created, this.dataset.modified, this.dataset.size, this.dataset.linkname, this.dataset.rmlink, this.dataset.path);
             $("body").append(lightbox);
         });
 

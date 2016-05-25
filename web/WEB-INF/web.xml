@@ -114,6 +114,15 @@
         <url-pattern>/rm</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RenameFileServlet</servlet-name>
+        <servlet-class>jTransfer.RenameFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RenameFileServlet</servlet-name>
+        <url-pattern>/rename</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>
     </listener>
