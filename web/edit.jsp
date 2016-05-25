@@ -34,11 +34,6 @@
     </div>
 </div>
 
-<%--Hack to get saving working--%>
-<form id="saveForm" style="display: none;">
-    <textarea name="editText" title="hidden" id="hiddenArea"></textarea>
-</form>
-
 <%@include file="includes/bootstrapjs.jsp" %>
 <script src="${pageContext.request.contextPath}/js/common.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/edit.js" type="text/javascript"></script>

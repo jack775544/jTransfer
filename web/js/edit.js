@@ -1,7 +1,8 @@
-var editor;
-var filename;
-var locationPath;
 $(document).ready(function(){
+    var editor;
+    var filename;
+    var locationPath;
+
     var params = common.getParameters();
     filename = decodeURIComponent(params.filename);
     locationPath = decodeURIComponent(params.pwd) + '/' + filename;
@@ -65,15 +66,13 @@ $(document).ready(function(){
 
     function saveFile(){
         var fileData = editor.getValue();
-        $('#hiddenArea').val(fileData);
-        var secretForm = $('#saveForm');
 
         $.ajax({
             type: "POST",
             url: common.buildUrl('./raw', {path: locationPath}),
-            data: {"contents": secretForm.serializeArray()[0].value},
+            data: {"contents": fileData},
             success: function () {
-                alert('done');
+                alert('File has been saved');
             }
         });
     }
