@@ -64,32 +64,14 @@ $(document).ready(function(){
     }
 
     function saveFile(){
-        /*var formData = new FormData();
-        var file = new Blob([editor.getValue()], {type: "text/plain"});
-        formData.append('file', file[0]);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', common.buildUrl('./put', {path: locationPath}), true);
-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // File(s) uploaded.
-                alert('good');
-            } else {
-                alert('bad');
-            }
-        };
-        xhr.send(formData);*/
-
-
         var fileData = editor.getValue();
-        
+        $('#hiddenArea').val(fileData);
+        var secretForm = $('#saveForm');
+
         $.ajax({
             type: "POST",
             url: common.buildUrl('./raw', {path: locationPath}),
-            mimeType: 'text/plain',
-            data: fileData,
-            processData: false,
+            data: {"contents": secretForm.serializeArray()[0].value},
             success: function () {
                 alert('done');
             }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLDecoder;
 import java.util.Arrays;
 
 /**
@@ -27,13 +28,11 @@ public class UploadRawServlet extends HttpServlet {
             MySqlLogger.logGeneral("Item not found", session.getId());
             return;
         }
-        String path = (String) request.getParameter("path");
-        byte[] file = serialize(request.getParameter("file"));
+        String path = URLDecoder.decode(request.getParameter("path"), "UTF-8");
+        byte[] file = request.getParameter("contents").getBytes();
 
-        if (path == null || file == null){
-            System.out.println(path);
-            System.out.println(file);
-            MySqlLogger.logGeneral("Bad post data:\n Path: " + path + "\nFile: " + Arrays.toString(file), session.getId());
+        if (path == null){
+            MySqlLogger.logGeneral("Bad post data:\n Path: null\nFile: " + Arrays.toString(file), session.getId());
             response.sendError(500, "Malformed post data");
             return;
         }
