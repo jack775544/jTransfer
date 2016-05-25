@@ -23,6 +23,7 @@ $(document).ready(function(){
             }
         }
     });
+
     $.get(common.buildUrl('get', {filename: locationPath, name:filename}), function (e) {
         $('#editor').text(e);
         initEditor();
@@ -59,9 +60,9 @@ $(document).ready(function(){
             editor.session.setMode(this.value);
         });
 
-        $('#save').click(function(){
-            saveFile();
-        });
+        $('#save').click(saveFile)
+
+        $('#download').click(saveDownload)
     }
 
     function saveFile(){
@@ -73,6 +74,18 @@ $(document).ready(function(){
             data: {"contents": fileData},
             success: function () {
                 alert('File has been saved');
+            }
+        });
+    }
+
+    function saveDownload(){
+        var fileData = editor.getValue();
+        $.ajax({
+            type: "POST",
+            url: common.buildUrl('./raw', {path: locationPath}),
+            data: {"contents": fileData},
+            success: function () {
+                window.location = common.buildUrl('get', {filename: locationPath, name:filename});
             }
         });
     }
