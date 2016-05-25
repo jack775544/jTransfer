@@ -1,13 +1,16 @@
+var editor;
+var filename;
+var locationPath;
 $(document).ready(function(){
     var params = common.getParameters();
-    var filename = decodeURIComponent(params.filename);
-    var location = decodeURIComponent(params.pwd) + '/' + filename;
-    console.log(location);
+    filename = decodeURIComponent(params.filename);
+    locationPath = decodeURIComponent(params.pwd) + '/' + filename;
+    console.log(locationPath);
     $.ajax({
         type: "POST",
         url: './exec',
         mimeType: 'text/plain',
-        data: {"pwd": location},
+        data: {"pwd": locationPath},
         success: function (data) {
             var args = data.split(";");
             var type  = args[1].trim().split("=");
@@ -19,16 +22,14 @@ $(document).ready(function(){
             }
         }
     });
-    console.log(location);
-    console.log(filename);
-    $.get(common.buildUrl('get', {filename: location, name:filename}), function (e) {
+    $.get(common.buildUrl('get', {filename: locationPath, name:filename}), function (e) {
         $('#editor').text(e);
         initEditor();
     });
 
     function initEditor() {
         // Create our editor
-        var editor = ace.edit("editor");
+        editor = ace.edit("editor");
         var modelist = ace.require("ace/ext/modelist");
 
         // Make our list of languages
@@ -55,6 +56,43 @@ $(document).ready(function(){
          */
         $("#modes").change(function () {
             editor.session.setMode(this.value);
+        });
+
+        $('#save').click(function(){
+            saveFile();
+        });
+    }
+
+    function saveFile(){
+        /*var formData = new FormData();
+        var file = new Blob([editor.getValue()], {type: "text/plain"});
+        formData.append('file', file[0]);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', common.buildUrl('./put', {path: locationPath}), true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // File(s) uploaded.
+                alert('good');
+            } else {
+                alert('bad');
+            }
+        };
+        xhr.send(formData);*/
+
+
+        var fileData = editor.getValue();
+        
+        $.ajax({
+            type: "POST",
+            url: common.buildUrl('./raw', {path: locationPath}),
+            mimeType: 'text/plain',
+            data: fileData,
+            processData: false,
+            success: function () {
+                alert('done');
+            }
         });
     }
 });

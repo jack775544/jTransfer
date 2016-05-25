@@ -2,7 +2,7 @@ $(document).ready(function () {
     var ajaxConnect;
     var pwd;
 
-    function buildLightbox(name, url, created, modified, size, linkname) {
+    function buildLightbox(name, url, created, modified, size, linkname, rmUrl) {
         var lightbox = $('<div></div>', {id: 'lightbox'});
         var content = $('<div></div>', {class: 'container'});
         var jumbo = $('<div></div>', {class: 'jumbotron'});
@@ -20,12 +20,28 @@ $(document).ready(function () {
         var editUrl = common.buildUrl('edit', {filename: linkname, pwd: pwd});
         $('<a href="' + editUrl + '" target="_blank">Edit</a>').appendTo(jumbo);
 
+        $('<br/>').appendTo(jumbo);
+        $('<br/>').appendTo(jumbo);
+
+
+        var changeDiv = $('<div></div>').appendTo(jumbo);
+        var deleteLink = $('<a href="' + rmUrl + '" id="delete">Delete</a>');
+        var renameLink = $('<a href="' + editUrl + '" target="_blank">Rename</a>');
+
+        deleteLink.click(rmClick);
+
+        deleteLink.appendTo(changeDiv);
+        $('<span> | </span>').appendTo(changeDiv);
+        renameLink.appendTo(changeDiv);
+        changeDiv.appendTo(jumbo);
+
         content.append(jumbo);
         lightbox.append(content);
 
         content.click(stopProp);
         lightbox.click(closeLightbox);
         closeLink.click(closeLightbox);
+
         return lightbox;
     }
 
@@ -36,6 +52,19 @@ $(document).ready(function () {
     function closeLightbox(e) {
         e.stopPropagation();
         $("#lightbox").remove();
+    }
+
+    function rmClick(e){
+        e.preventDefault();
+        console.log(this.href);
+        var confirmation = confirm("Delete this file?");
+        if (confirmation != true) {
+            return;
+        }
+        $.get(this.href, function () {
+            $("#lightbox").remove();
+            ajaxConnect();
+        })
     }
     
     ajaxConnect = function(){
@@ -86,6 +115,7 @@ $(document).ready(function () {
             console.log(path);
             console.log(filename);
             var url = common.buildUrl('./get', {filename: path, name: filename});
+            var rmUrl = common.buildUrl('./rm', {filename: path, name: filename});
             switch (Number(type)) {
                 case 1:
                     img = 'img/icons/document.png';
@@ -95,21 +125,23 @@ $(document).ready(function () {
                 case 2:
                     img = 'img/icons/folder.png';
                     url = '?pwd=' + encodeURIComponent(pwd) + "%2F" + filename;
+                    rmUrl = '';
                     textType = 'folder';
                     break;
                 default:
                     img = 'img/icons/folder.png';
                     url = '#';
+                    rmUrl = '';
                     textType = 'other';
                     break;
             }
 
-            itemList.append(buildListItem(url, modified, created, filename, size, textType, img, path));
+            itemList.append(buildListItem(url, modified, created, filename, size, textType, img, path, rmUrl));
         }
 
         $('.file').click(function (e) {
             e.preventDefault();
-            var lightbox = buildLightbox(this.dataset.name, this.href, this.dataset.created, this.dataset.modified, this.dataset.size, this.dataset.linkname);
+            var lightbox = buildLightbox(this.dataset.name, this.href, this.dataset.created, this.dataset.modified, this.dataset.size, this.dataset.linkname, this.dataset.rmlink);
             $("body").append(lightbox);
         });
 
@@ -159,9 +191,9 @@ $(document).ready(function () {
         xhr.send(formData);
     };
 
-    function buildListItem(url, modified, created, filename, size, textType, img, path) {
-        var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}' data-path='{7}'><img src='{6}'>{3}</a></li>";
-        return tag.format(url, modified, created, filename, size, textType, img, path);
+    function buildListItem(url, modified, created, filename, size, textType, img, path, rmUrl) {
+        var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}' data-path='{7}' data-rmlink='{8}'><img src='{6}'>{3}</a></li>";
+        return tag.format(url, modified, created, filename, size, textType, img, path, rmUrl);
     }
     
     $('#refresh').click(function(){

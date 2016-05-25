@@ -96,6 +96,24 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UploadRawServlet</servlet-name>
+        <servlet-class>jTransfer.UploadRawServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadRawServlet</servlet-name>
+        <url-pattern>/raw</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteFileServlet</servlet-name>
+        <servlet-class>jTransfer.DeleteFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFileServlet</servlet-name>
+        <url-pattern>/rm</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>
     </listener>

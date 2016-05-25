@@ -19,7 +19,7 @@
                                                           aria-hidden="true"></span>Save
         </button>
         <button type="button" id="download" class="btn"><span class="glyphicon glyphicon-save"
-                                                              aria-hidden="true"></span>Download
+                                                              aria-hidden="true"></span>Save and Download
         </button>
         <select id="modes"></select>
     </div>
