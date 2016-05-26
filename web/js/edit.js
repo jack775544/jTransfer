@@ -60,7 +60,7 @@ $(document).ready(function(){
             editor.session.setMode(this.value);
         });
 
-        $('#save').click(saveFile)
+        $('#save').click(saveFile);
 
         $('#download').click(saveDownload)
     }
