@@ -69,7 +69,7 @@
         <url-pattern>/pwd</url-pattern>
     </servlet-mapping>
 
-        <servlet>
+    <servlet>
         <servlet-name>UploadFileServlet</servlet-name>
         <servlet-class>jTransfer.UploadFileServlet</servlet-class>
     </servlet>
@@ -86,7 +86,7 @@
         <servlet-name>ExecServlet</servlet-name>
         <url-pattern>/exec</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>jTransfer.LoginServlet</servlet-class>
@@ -94,6 +94,33 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UploadRawServlet</servlet-name>
+        <servlet-class>jTransfer.UploadRawServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadRawServlet</servlet-name>
+        <url-pattern>/raw</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteFileServlet</servlet-name>
+        <servlet-class>jTransfer.DeleteFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFileServlet</servlet-name>
+        <url-pattern>/rm</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RenameFileServlet</servlet-name>
+        <servlet-class>jTransfer.RenameFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RenameFileServlet</servlet-name>
+        <url-pattern>/rename</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -113,8 +140,6 @@
         <servlet-name>AdminLoginServlet</servlet-name>
         <url-pattern>/adminLogin</url-pattern>
     </servlet-mapping>
-
-
 
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>

@@ -1,13 +1,17 @@
 $(document).ready(function(){
+    var editor;
+    var filename;
+    var locationPath;
+
     var params = common.getParameters();
-    var filename = decodeURIComponent(params.filename);
-    var location = decodeURIComponent(params.pwd) + '/' + filename;
-    console.log(location);
+    filename = decodeURIComponent(params.filename);
+    locationPath = decodeURIComponent(params.pwd) + '/' + filename;
+    console.log(locationPath);
     $.ajax({
         type: "POST",
         url: './exec',
         mimeType: 'text/plain',
-        data: {"pwd": location},
+        data: {"pwd": locationPath},
         success: function (data) {
             var args = data.split(";");
             var type  = args[1].trim().split("=");
@@ -19,16 +23,15 @@ $(document).ready(function(){
             }
         }
     });
-    console.log(location);
-    console.log(filename);
-    $.get(common.buildUrl('get', {filename: location, name:filename}), function (e) {
+
+    $.get(common.buildUrl('get', {filename: locationPath, name:filename}), function (e) {
         $('#editor').text(e);
         initEditor();
     });
 
     function initEditor() {
         // Create our editor
-        var editor = ace.edit("editor");
+        editor = ace.edit("editor");
         var modelist = ace.require("ace/ext/modelist");
 
         // Make our list of languages
@@ -55,6 +58,35 @@ $(document).ready(function(){
          */
         $("#modes").change(function () {
             editor.session.setMode(this.value);
+        });
+
+        $('#save').click(saveFile)
+
+        $('#download').click(saveDownload)
+    }
+
+    function saveFile(){
+        var fileData = editor.getValue();
+
+        $.ajax({
+            type: "POST",
+            url: common.buildUrl('./raw', {path: locationPath}),
+            data: {"contents": fileData},
+            success: function () {
+                alert('File has been saved');
+            }
+        });
+    }
+
+    function saveDownload(){
+        var fileData = editor.getValue();
+        $.ajax({
+            type: "POST",
+            url: common.buildUrl('./raw', {path: locationPath}),
+            data: {"contents": fileData},
+            success: function () {
+                window.location = common.buildUrl('get', {filename: locationPath, name:filename});
+            }
         });
     }
 });
