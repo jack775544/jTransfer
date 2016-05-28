@@ -4,8 +4,10 @@
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
+    <div id="filetitle">
         <h1>Browser Transfer</h1>
+    </div>
+    <div class="jumbotron">
         <div id="error"></div>
         <form action="login" method="post" id="loginform" name="loginpart" onSubmit="return validateForm()">
             <div class="form-group">

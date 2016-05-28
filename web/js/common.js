@@ -44,6 +44,7 @@ common.buildUrl = function(base, params){
 };
 
 common.logoutTimeout = function(){
+    
     window.location = common.buildUrl('./logout', {'flash': 'Error: SFTP Connection Timeout'});
 };
 
