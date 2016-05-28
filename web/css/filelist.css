@@ -169,6 +169,12 @@ body > div:last-of-type {
     display: inline;
 }
 
+#error {
+    background-color: #ff6666;
+    font-size: 14pt;
+    text-align:center;
+}
+
 @media screen and (max-width: 767px) {
     #editoptions > select {
         width: 100%;
