@@ -13,7 +13,8 @@
         </form>
     </div>
 </div>
-<div class="jumbotron row files">
+<div class="jumbotron row files" id="filesrow">
+    <div id="error"></div>
     <div class="row" id="editoptions">
         <button type="button" id="refresh" class="btn"><span class="glyphicon glyphicon-refresh"
                                                              aria-hidden="true"></span>Refresh

@@ -181,6 +181,7 @@ $(document).ready(function () {
 
     form.onsubmit = function(e) {
         e.preventDefault();
+        document.getElementById("error").style.display = "none";
 
         // Update button text.
         uploadButton.innerHTML = 'Uploading...';
@@ -198,6 +199,8 @@ $(document).ready(function () {
                 ajaxConnect();
             } else {
                 console.log('An error occurred!');
+                document.getElementById("error").innerHTML = "Error: Failed to upload";
+                document.getElementById("error").style.display = "block";
             }
         };
         xhr.send(formData);
