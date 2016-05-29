@@ -44,10 +44,8 @@ public class AdminSession {
             con.close();
 
         }catch (SQLException e) {
-            System.out.println("SQLException");
-            e.printStackTrace();
+            MySqlLogger.logGeneral(e.getMessage());
         }
-        System.out.println(list);
         return list;
     }
 

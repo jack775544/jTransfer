@@ -6,7 +6,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1>Browser Transfer</h1>
-        <form action="./admin" method="post" id="loginform">
+        <form action="./adminValidate" method="post" id="loginform">
             <div class="row">
                 <h2>Admin login</h2>
                 <label for="admin-username">Username:</label>

@@ -147,7 +147,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminValidationServlet</servlet-name>
-        <url-pattern>/adminView</url-pattern>
+        <url-pattern>/adminValidate</url-pattern>
     </servlet-mapping>
 
     <listener>
