@@ -1,6 +1,5 @@
 package jTransfer;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,7 @@ public class AdminServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
+
         boolean auth = false;
         if (session.getAttribute(AdminValidationServlet.AUTH_STRING) instanceof Boolean){
             auth = (Boolean) session.getAttribute(AdminValidationServlet.AUTH_STRING);
@@ -30,10 +30,7 @@ public class AdminServlet extends HttpServlet {
         }
         AdminSession as = new AdminSession();
         List<Types> result = as.getTypes();
-        //response.getWriter().print("hello world");
         request.setAttribute("sessions", result);
         request.getRequestDispatcher("adminView.jsp").forward(request, response);
-        //RequestDispatcher view = request.getRequestDispatcher("adminView.jsp");
-        //view.forward(request, response);
     }
 }
