@@ -4,21 +4,26 @@
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
+    <div id="filetitle">
         <h1>Browser Transfer</h1>
-        <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform">
-            <div class="form-group">
+    </div>
+    <div class="jumbotron">
+        <div id="error"></div>
+        <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform" onSubmit="return validateForm()">
+        <div class="form-group">
                 <label for="remote">SFTP Server Address:</label>
                 <input type="text" name="remote" id="remote" value="remote.labs.eait.uq.edu.au" class="form-control"/><br>
             </div>
-            <div class="form-group">
+            <div class="row">
+                <h2>User Login</h2>
                 <label for="username">Username:</label>
                 <input type="text" name="username" id="username" class="form-control"/><br>
                 <label for="password">Password:</label>
                 <input type="password" name="password" id="password" class="form-control"/><br>
+                <input type="submit" name="submit" value="Submit" class="btn"/>
             </div>
-            <input type="submit" name="submit" value="Submit" class="btn"/>
         </form>
+        <a href="./adminLogin">Log in to admin view</a>
     </div>
 </div>
 <%@include file="includes/bootstrapjs.jsp" %>

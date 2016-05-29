@@ -69,7 +69,7 @@
         <url-pattern>/pwd</url-pattern>
     </servlet-mapping>
 
-        <servlet>
+    <servlet>
         <servlet-name>UploadFileServlet</servlet-name>
         <servlet-class>jTransfer.UploadFileServlet</servlet-class>
     </servlet>
@@ -86,7 +86,7 @@
         <servlet-name>ExecServlet</servlet-name>
         <url-pattern>/exec</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>jTransfer.LoginServlet</servlet-class>
@@ -121,6 +121,33 @@
     <servlet-mapping>
         <servlet-name>RenameFileServlet</servlet-name>
         <url-pattern>/rename</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>jTransfer.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminLoginServlet</servlet-name>
+        <servlet-class>jTransfer.AdminLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminLoginServlet</servlet-name>
+        <url-pattern>/adminLogin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminValidationServlet</servlet-name>
+        <servlet-class>jTransfer.AdminValidationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminValidationServlet</servlet-name>
+        <url-pattern>/adminView</url-pattern>
     </servlet-mapping>
 
     <listener>
