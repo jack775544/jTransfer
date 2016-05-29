@@ -47,28 +47,12 @@ common.logoutTimeout = function(){
     window.location = common.buildUrl('./logout', {'flash': 'Error: SFTP Connection Timeout'});
 };
 
-common.validateForm = function() {
+common.displayError = function(message){
+    document.getElementById("error").innerHTML = "Error: You must enter a username";
+    document.getElementById("error").style.display = "block";
+};
+
+common.removeError = function(){
+    document.getElementById("error").innerHTML = "";
     document.getElementById("error").style.display = "none";
-    //store the data
-    var a=document.forms["loginpart"]["username"].value;
-    var b=document.forms["loginpart"]["password"].value;
-    var message=document.getElementById("error");
-
-    //If the input is null display error
-    if (a==null || a=="") {
-        document.getElementById("error").innerHTML = "Error: You must enter a username";
-        document.getElementById("error").style.display = "block";
-        return false;
-    }
-    if (a.length!=8) {
-        document.getElementById("error").innerHTML = "Error: Username must be 8 characters";
-        document.getElementById("error").style.display = "block";
-        return false;
-    }
-
-    if (b==null || b=="") {
-        document.getElementById("error").innerHTML = "Error: You must enter a password";
-        document.getElementById("error").style.display = "block";
-        return false;
-    }
 };
