@@ -102,6 +102,10 @@ h2 {
     padding: 2px;
 }
 
+table td {
+    padding: 10px;
+}
+
 #items {
     padding: 0px;
 }
