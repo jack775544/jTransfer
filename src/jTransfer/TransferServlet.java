@@ -16,7 +16,12 @@ public class TransferServlet extends javax.servlet.http.HttpServlet {
         HttpSession session = request.getSession();
         // If the session is set up then do the request, otherwise return to login
         if (!(session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection)){
-            response.sendRedirect("./");
+            String url = request.getRequestURI();
+            String query = request.getQueryString();
+            if (query != null){
+                url += "?" + query;
+            }
+            response.sendRedirect("./?next=" + url);
         } else {
             request.getRequestDispatcher("/files.jsp").forward(request, response);
         }

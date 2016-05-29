@@ -15,22 +15,32 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+
+        // If an existing connection exists
+        if (session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection){
+            Connection c = (Connection) session.getAttribute(Connection.CONNECTION_NAME);
+            c.closeConnection();
+            session.removeAttribute(Connection.CONNECTION_NAME);
+        }
+
         Connection connection;
 
-        // Check if the SSH connection has already been established and create it if not
-        if (!(session.getAttribute(Connection.CONNECTION_NAME) instanceof Connection)){
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String remote = request.getParameter("remote");
-            try {
-                connection = new Connection(remote, username, password);
-            } catch (Exception e) {
-                response.sendRedirect("./logout");
-                return;
-            }
-            session.setAttribute(Connection.CONNECTION_NAME, connection);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String remote = request.getParameter("remote");
+        try {
+            connection = new Connection(remote, username, password);
+        } catch (Exception e) {
+            response.sendRedirect("./logout");
+            return;
         }
-        response.sendRedirect("./files");
+        session.setAttribute(Connection.CONNECTION_NAME, connection);
+
+        if (request.getParameter("next") == null) {
+            response.sendRedirect("./files");
+        } else {
+            response.sendRedirect(request.getParameter("next"));
+        }
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
