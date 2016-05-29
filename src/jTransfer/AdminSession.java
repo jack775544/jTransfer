@@ -66,10 +66,9 @@ public class AdminSession {
 
 
         } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException");
-            e.printStackTrace();
+            MySqlLogger.logGeneral(e.getMessage());
         } catch (SQLException e) {
-            e.printStackTrace();
+            MySqlLogger.logGeneral(e.getMessage());
         }
         return connection;
     }
