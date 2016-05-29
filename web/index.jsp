@@ -9,7 +9,7 @@
     </div>
     <div class="jumbotron">
         <div id="error"></div>
-        <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform" onSubmit="return validateForm()">
+        <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform" onSubmit="common.validateForm()">
         <div class="form-group">
                 <label for="remote">SFTP Server Address:</label>
                 <input type="text" name="remote" id="remote" value="remote.labs.eait.uq.edu.au" class="form-control"/><br>
