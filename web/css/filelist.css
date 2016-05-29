@@ -245,21 +245,22 @@ body > div:last-of-type {
 }
 
 #error {
-    background-color: #ff6666;
+    /*background-color: #ff6666;*/
+    display: none;
     font-size: 14pt;
     text-align:center;
 }
 
 @media screen and (max-width: 767px) {
     #editoptions > select {
-        width: 100%;
+        width: 95%;
         margin-top: 3px;
     }
     #logout {
         margin: 0;
     }
     #editjumbo {
-        height: calc(100vh - 199px);
+        height: calc(100vh - 224px);
     }
     #items > li {
         float: left;

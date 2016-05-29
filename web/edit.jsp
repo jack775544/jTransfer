@@ -6,6 +6,7 @@
 <div class="row">
     <div class="col-sm-11">
         <h1>Browser Transfer</h1>
+        <div id="error" class="alert alert-danger"></div>
     </div>
     <div class="col-sm-1">
         <form method="get" action="logout">

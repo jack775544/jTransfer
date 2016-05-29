@@ -8,7 +8,7 @@
         <h1>Browser Transfer</h1>
     </div>
     <div class="jumbotron">
-        <div id="error"></div>
+        <div id="error" class="alert alert-danger"></div>
         <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform" onSubmit="common.validateForm()">
             <div class="row">
                 <div class="form-group">

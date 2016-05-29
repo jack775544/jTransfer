@@ -19,7 +19,7 @@ $(document).ready(function(){
             console.log(type[1]);
 
             if (type[1] == 'binary') {
-                alert('This is a binary file');
+                alert('This is a binary file, it is not recommended to edit this');
             }
         }
     });

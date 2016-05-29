@@ -48,7 +48,7 @@ common.logoutTimeout = function(){
 };
 
 common.displayError = function(message){
-    document.getElementById("error").innerHTML = "Error: You must enter a username";
+    document.getElementById("error").innerHTML = message;
     document.getElementById("error").style.display = "block";
 };
 
