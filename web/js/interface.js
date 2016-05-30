@@ -207,7 +207,7 @@ $(document).ready(function () {
     };
 
     function buildListItem(url, modified, created, filename, size, textType, img, path, rmUrl) {
-        var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}' data-path='{7}' data-rmlink='{8}'><img src='{6}'>{3}</a></li>";
+        var tag = "<li><a class='itemlink {5}' href='{0}' data-modified='{1}' data-created='{2}' data-name='{3}' data-size='{4}' data-type='{5}' data-linkname='{3}' data-path='{7}' data-rmlink='{8}'><img src='{6}' alt='{5}'>{3}</a></li>";
         return tag.format(url, modified, created, filename, size, textType, img, path, rmUrl);
     }
     

@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
     <%@include file="includes/head.jsp" %>
 </head>
 <body>
-<div class="row">
+<header class="row">
     <div class="col-sm-11">
         <h1>Browser Transfer</h1>
     </div>
@@ -12,7 +13,7 @@
             <input type="submit" name="logout" value="Logout" class="btn" id="logout">
         </form>
     </div>
-</div>
+</header>
 <div class="jumbotron row files" id="filesrow">
     <div id="error" class="alert alert-danger"></div>
     <div class="row" id="editoptions">

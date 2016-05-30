@@ -1,12 +1,13 @@
+<!DOCTYPE html>
 <html>
 <head>
     <%@include file="includes/head.jsp" %>
 </head>
 <body>
 <div class="container">
-    <div id="filetitle">
+    <header id="filetitle">
         <h1>Browser Transfer</h1>
-    </div>
+    </header>
     <div class="jumbotron">
         <div id="error" class="alert alert-danger"></div>
         <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform" onSubmit="common.validateForm()">
