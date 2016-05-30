@@ -5,8 +5,10 @@
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
+    <header id="filetitle">
         <h1>Browser Transfer</h1>
+    </header>
+    <div class="jumbotron">
         <form action="./adminValidate" method="post" id="loginform">
             <div class="row">
                 <h2>Admin login</h2>
