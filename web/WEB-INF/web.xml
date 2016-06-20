@@ -150,6 +150,24 @@
         <url-pattern>/adminValidate</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>jTransfer.ChangePasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/changePass</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PasswordChangeInterfaceServlet</servlet-name>
+        <servlet-class>jTransfer.PasswordChangeInterfaceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PasswordChangeInterfaceServlet</servlet-name>
+        <url-pattern>/change</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>jTransfer.TransferSessionListener</listener-class>
     </listener>

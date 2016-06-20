@@ -51,16 +51,18 @@ public class AdminUser {
 
     /**
      * Authenticates the user if it is not already
-     * @param password The password to authenticate using, if the class already has a password set but not authenticated
-     *                 then the existing password will be overwritten with this one
+     * @param password The password to authenticate using, if the class already has a password set in it and this
+     *                 authentication evaluates to true then the old password will be replaced
      * @return true iff the user passes the authentication test
      */
     public boolean authenticateUser(String password) {
-        if (authenticated){
+        String hash = encryptPassword(password);
+        boolean r = authenticate(username, hash);
+        if (r){
+            this.passwordHash = hash;
             return true;
         }
-        this.passwordHash = encryptPassword(password);
-        return authenticate(username, this.passwordHash);
+        return false;
     }
 
     /**
@@ -122,9 +124,9 @@ public class AdminUser {
     }
 
     /**
-     * Austhenticates the user's username and password
+     * Authenticates the user's username and password
      * @param username the username
-     * @param password the passowrd
+     * @param password the password
      * @return true iff the username and password match one in the database
      */
     private boolean authenticate(String username, String password){
@@ -160,6 +162,64 @@ public class AdminUser {
 
             // Username's are unique so count can only be 1 or 0
             return count == 1;
+        } catch (SQLException e) {
+            MySqlLogger.logGeneral(e.getMessage());
+        } finally {
+            //finally block used to close resources
+            try {
+                if (adminQuery != null) {
+                    adminQuery.close();
+                }
+            } catch (SQLException se2) {
+                // We can't prevent this error, so just fail as gracefully as possible
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException se) {
+                // We can't prevent this error, so just fail as gracefully as possible
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Changes the password of the user iff the user exists. Also changes the classes password hash to match the new
+     * password hash in the database
+     * @param password the new password to set
+     * @return true iff the password has changed
+     */
+    public boolean updatePassword(String password) {
+        String databaseUser = MySqlLogger.USER;
+        String databasePassword = MySqlLogger.PASS;
+        String databaseUrl = MySqlLogger.DB_URL;
+        String databaseClass = MySqlLogger.JDBC_DRIVER;
+
+        java.sql.Connection connection = null;
+        PreparedStatement adminQuery = null;
+        password = encryptPassword(password);
+
+        try {
+            Class.forName(databaseClass);
+        } catch (ClassNotFoundException e) {
+            MySqlLogger.logGeneral("Database class not found");
+            return false;
+        }
+
+        try {
+            connection = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
+            connection.setCatalog("jtransfer");
+
+            String sql = "UPDATE users SET password = ? WHERE username = ?";
+            adminQuery = connection.prepareStatement(sql);
+            adminQuery.setString(1, password);
+            adminQuery.setString(2, username);
+
+            adminQuery.executeUpdate();
+
+            this.passwordHash = password;
+            return true;
         } catch (SQLException e) {
             MySqlLogger.logGeneral(e.getMessage());
         } finally {

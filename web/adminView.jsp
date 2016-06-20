@@ -17,6 +17,9 @@
     </div>
 </header>
 <div class="jumbotron files row">
+    <div class="row">
+        <a href="./change">Change Admin Password</a>
+    </div>
     <div id="filecontainer" class="row">
         <table>
             <tr>
