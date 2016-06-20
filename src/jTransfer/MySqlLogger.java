@@ -10,13 +10,13 @@ import java.util.Date;
  */
 public class MySqlLogger {
     // JDBC driver name and database URL
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/";
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/";
 
     // Database credentials
     // TODO: Change the username and password for a production environment
-    private static final String USER = "jtransfer";
-    private static final String PASS = "pass";
+    static final String USER = "jtransfer";
+    static final String PASS = "pass";
 
 
     public static boolean logGeneral(String item){
