@@ -5,11 +5,11 @@
 </head>
 <body>
 <div class="container">
-    <header id="filetitle">
-        <h1>Browser Transfer</h1>
-    </header>
     <div class="jumbotron">
         <form action="./adminValidate" method="post" id="loginform">
+            <header id="filetitle">
+                <h1>Browser Transfer</h1>
+            </header>
             <div class="row">
                 <h2>Admin login</h2>
                 <label for="admin-username">Username:</label>
