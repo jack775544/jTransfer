@@ -20,11 +20,14 @@ public class AdminServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
 
-        boolean auth = false;
-        if (session.getAttribute(AdminValidationServlet.AUTH_STRING) instanceof Boolean){
-            auth = (Boolean) session.getAttribute(AdminValidationServlet.AUTH_STRING);
+        AdminUser user;
+        if (session.getAttribute(AdminValidationServlet.ADMIN_USER) instanceof AdminUser){
+            user = (AdminUser) session.getAttribute(AdminValidationServlet.ADMIN_USER);
+        } else {
+            response.sendRedirect("./adminLogin");
+            return;
         }
-        if (!auth) {
+        if (!user.isAuthenticated()) {
             response.sendRedirect("./adminLogin");
             return;
         }

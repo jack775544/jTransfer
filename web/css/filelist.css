@@ -173,6 +173,10 @@ body > div:last-of-type {
     display: none;
 }
 
+tr > * {
+    padding: 0 5px 0 5px;
+}
+
 @media screen and (max-width: 767px) {
     #editoptions > select {
         width: 100%;

@@ -38,7 +38,7 @@ public class RenameFileServlet extends HttpServlet {
                 ChannelSftp sftpChannel = connection.getSftpChannel();
                 sftpChannel.rename(oldPath, newPath);
 
-                MySqlLogger.logGeneral("Renamed: " + oldPath + " to: " + newPath);
+                MySqlLogger.logGeneral("Renamed: " + oldPath + " to: " + newPath, session.getId());
             } catch (Exception e) {
                 // Should never happen, I hope
                 MySqlLogger.logGeneral(e.getMessage(), session.getId());

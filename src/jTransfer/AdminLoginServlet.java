@@ -19,9 +19,9 @@ public class AdminLoginServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute(AdminValidationServlet.AUTH_STRING) instanceof Boolean){
-            boolean auth = (Boolean) session.getAttribute(AdminValidationServlet.AUTH_STRING);
-            if (auth){
+        if (session.getAttribute(AdminValidationServlet.ADMIN_USER) instanceof AdminUser){
+            AdminUser user = (AdminUser) session.getAttribute(AdminValidationServlet.ADMIN_USER);
+            if (user.isAuthenticated()){
                 response.sendRedirect("./admin");
                 return;
             }

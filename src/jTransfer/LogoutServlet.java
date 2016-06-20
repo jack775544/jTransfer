@@ -25,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
             connection.closeConnection();
         }
         session.removeAttribute(Connection.CONNECTION_NAME);
-        session.removeAttribute(AdminValidationServlet.AUTH_STRING);
+        session.removeAttribute(AdminValidationServlet.ADMIN_USER);
         response.sendRedirect("./");
     }
 }
