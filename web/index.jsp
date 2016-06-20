@@ -5,10 +5,10 @@
 </head>
 <body>
 <div class="container">
-    <header id="filetitle">
-        <h1>Browser Transfer</h1>
-    </header>
     <div class="jumbotron">
+        <header id="filetitle">
+            <h1>Browser Transfer</h1>
+        </header>
         <div id="error" class="alert alert-danger"></div>
         <form action="<%= request.getAttribute("formUrl") %>" method="post" id="loginform" onSubmit="common.validateForm()">
             <div class="row">

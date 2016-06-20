@@ -4,53 +4,19 @@ html,
 }
 
 h1 {
-    font-size: 60px;
-    text-align:center;
-    color: #fff;
+    font-size: 30px;
 }
 
 h2 {
     font-size: 28px;
 }
 
-#remote {
-    border: 1px solid #ccc;
-    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-
-#username {
-    border: 1px solid #ccc;
-    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-#password {
-    border: 1px solid #ccc;
-    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-
 #items > li {
     float: left;
     height: 120px;
     width: 100px;
     margin: 5px;
-    background-color: #fff;
+    background-color: #c9cac6;
     border-radius: 5px;
 }
 
@@ -70,7 +36,7 @@ h2 {
 }
 
 #items > li:hover {
-    background-color: #cce6ff;
+    background-color: #888a85;
 }
 
 .btn:hover {
@@ -82,11 +48,7 @@ h2 {
 }
 
 .row {
-    margin: 0 0 0 15px;
-}
-
-.container {
-    position: center;
+    margin: 0 15px 0 15px;
 }
 
 #logout {
@@ -94,7 +56,7 @@ h2 {
 }
 
 .files {
-    padding: 0px;
+    padding: 0;
     margin: 0;
 }
 
@@ -102,12 +64,8 @@ h2 {
     padding: 2px;
 }
 
-table td {
-    padding: 10px;
-}
-
 #items {
-    padding: 0px;
+    padding: 0;
 }
 
 #lightbox {
@@ -142,47 +100,18 @@ table td {
     width: 90%;
 }
 
-
-#filesrow {
-    -webkit-box-shadow: 6px 7px 25px 2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 6px 7px 25px 2px rgba(0,0,0,0.75);
-    box-shadow: 6px 7px 25px 2px rgba(0,0,0,0.75);
-}
-
-.jumbotron {
-    -webkit-box-shadow: 6px 7px 25px 2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 6px 7px 25px 2px rgba(0,0,0,0.75);
-    box-shadow: 6px 7px 25px 2px rgba(0,0,0,0.75);
-}
-
-.row {
-    -webkit-box-shadow: 6px 7px 25px 2px rgba(0,0,0,0);
-    -moz-box-shadow: 6px 7px 25px 2px rgba(0,0,0,0);
-    box-shadow: 6px 7px 25px 2px rgba(0,0,0,0);
-}
-
-
-#filetitle {
-    margin-left: -12.8%;
-}
-
 button > .glyphicon {
     margin-right: 3px;
 }
 
 .btn {
-    background-color: #4ca8b3;
-    color: #fff;
-    font-size:14pt;
-    padding-left:10px;
-    padding-right:10px;
+    background-color: #c9cac6;
 }
 
 html,
 body {
     height: 100%;
     display: flex;
-    background-color: #99ccff;
     flex-direction: column;
 }
 
@@ -215,15 +144,11 @@ body > div:last-of-type {
 }
 
 .jumbotron {
-    background-color: #fff;
-}
-
-.col-sm-11 {
-    position: center;
+    background-color: #f0f0f0;
 }
 
 #editjumbo {
-    height: calc(100vh - 140px);
+    height: calc(100vh - 131px);
 }
 
 #editoptions > * {
@@ -245,22 +170,19 @@ body > div:last-of-type {
 }
 
 #error {
-    /*background-color: #ff6666;*/
     display: none;
-    font-size: 14pt;
-    text-align:center;
 }
 
 @media screen and (max-width: 767px) {
     #editoptions > select {
-        width: 95%;
+        width: 100%;
         margin-top: 3px;
     }
     #logout {
         margin: 0;
     }
     #editjumbo {
-        height: calc(100vh - 224px);
+        height: calc(100vh - 199px);
     }
     #items > li {
         float: left;
