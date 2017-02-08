@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="form-group">
                     <label for="remote">SFTP Server Address:</label>
-                    <input type="text" name="remote" id="remote" value="remote.labs.eait.uq.edu.au" class="form-control"/><br>
+                    <input type="text" name="remote" id="remote" value="localhost" class="form-control"/><br>
                 </div>
                 <h2>User Login</h2>
                 <label for="username">Username:</label>

@@ -16,7 +16,7 @@ public class Connection {
 
     public Connection(String remote, String username, String password) throws SftpException, JSchException {
         JSch jSch = new JSch();
-        int port = 22;
+        int port = 4444;
 
         Session session = jSch.getSession(username, remote, port);
 
