@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute(Connection.CONNECTION_NAME, connection);
 
         if (request.getParameter("next") == null) {
-            response.sendRedirect("./files");
+            response.sendRedirect("./files.jsp");
         } else {
             response.sendRedirect(request.getParameter("next"));
         }

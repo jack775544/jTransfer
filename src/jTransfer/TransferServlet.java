@@ -23,7 +23,7 @@ public class TransferServlet extends javax.servlet.http.HttpServlet {
             }
             response.sendRedirect("./?next=" + url);
         } else {
-            request.getRequestDispatcher("/files.jsp").forward(request, response);
+            request.getRequestDispatcher("/files.html").forward(request, response);
         }
     }
 }

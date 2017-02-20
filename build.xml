@@ -1,274 +1,293 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="jtransfer" default="all">
 
-  <!-- Uncomment the following property if no tests compilation is needed -->
-  <!-- 
-  <property name="skip.tests" value="true"/>
-   -->
-  
-  <!-- Compiler options -->
-  
-  <property name="compiler.debug" value="on"/>
-  <property name="compiler.generate.no.warnings" value="off"/>
-  <property name="compiler.args" value=""/>
-  <property name="compiler.max.memory" value="700m"/>
-  <patternset id="ignored.files">
-    <exclude name="**/*.hprof/**"/>
-    <exclude name="**/*.pyc/**"/>
-    <exclude name="**/*.pyo/**"/>
-    <exclude name="**/*.rbc/**"/>
-    <exclude name="**/*.yarb/**"/>
-    <exclude name="**/*~/**"/>
-    <exclude name="**/.DS_Store/**"/>
-    <exclude name="**/.git/**"/>
-    <exclude name="**/.hg/**"/>
-    <exclude name="**/.svn/**"/>
-    <exclude name="**/CVS/**"/>
-    <exclude name="**/RCS/**"/>
-    <exclude name="**/SCCS/**"/>
-    <exclude name="**/__pycache__/**"/>
-    <exclude name="**/_svn/**"/>
-    <exclude name="**/rcs/**"/>
-    <exclude name="**/vssver.scc/**"/>
-    <exclude name="**/vssver2.scc/**"/>
-  </patternset>
-  <patternset id="library.patterns">
-    <include name="*.egg"/>
-    <include name="*.jar"/>
-    <include name="*.ear"/>
-    <include name="*.apk"/>
-    <include name="*.swc"/>
-    <include name="*.war"/>
-    <include name="*.ane"/>
-    <include name="*.zip"/>
-  </patternset>
-  <patternset id="compiler.resources">
-    <exclude name="**/?*.java"/>
-    <exclude name="**/?*.form"/>
-    <exclude name="**/?*.class"/>
-    <exclude name="**/?*.groovy"/>
-    <exclude name="**/?*.scala"/>
-    <exclude name="**/?*.flex"/>
-    <exclude name="**/?*.kt"/>
-    <exclude name="**/?*.clj"/>
-    <exclude name="**/?*.aj"/>
-  </patternset>
-  
-  <!-- JDK definitions -->
+    <!-- Uncomment the following property if no tests compilation is needed -->
+    <!--
+    <property name="skip.tests" value="true"/>
+     -->
 
-  <property environment="env"/>
-  <property name="jdk.bin.1.8" value="${env.JAVA_HOME}/bin"/>
-  <path id="jdk.classpath.1.8">
-    <fileset dir="${env.JAVA_HOME}">
-      <include name="jre/lib/charsets.jar"/>
-      <include name="jre/lib/deploy.jar"/>
-      <include name="jre/lib/javaws.jar"/>
-      <include name="jre/lib/jce.jar"/>
-      <include name="jre/lib/jfr.jar"/>
-      <include name="jre/lib/jfxswt.jar"/>
-      <include name="jre/lib/jsse.jar"/>
-      <include name="jre/lib/management-agent.jar"/>
-      <include name="jre/lib/plugin.jar"/>
-      <include name="jre/lib/resources.jar"/>
-      <include name="jre/lib/rt.jar"/>
-      <include name="jre/lib/ext/access-bridge-32.jar"/>
-      <include name="jre/lib/ext/cldrdata.jar"/>
-      <include name="jre/lib/ext/dnsns.jar"/>
-      <include name="jre/lib/ext/jaccess.jar"/>
-      <include name="jre/lib/ext/jfxrt.jar"/>
-      <include name="jre/lib/ext/localedata.jar"/>
-      <include name="jre/lib/ext/nashorn.jar"/>
-      <include name="jre/lib/ext/sunec.jar"/>
-      <include name="jre/lib/ext/sunjce_provider.jar"/>
-      <include name="jre/lib/ext/sunmscapi.jar"/>
-      <include name="jre/lib/ext/sunpkcs11.jar"/>
-      <include name="jre/lib/ext/zipfs.jar"/>
-    </fileset>
-  </path>
-  
-  <property name="project.jdk.home" value="${env.JAVA_HOME}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
-  
-  
-  <!-- Project Libraries -->
-  
-  <path id="library.java_ee_6-java_ee_6.classpath">
-    <pathelement location="${basedir}/lib/javax.annotation.jar"/>
-    <pathelement location="${basedir}/lib/javax.ejb.jar"/>
-    <pathelement location="${basedir}/lib/javax.jms.jar"/>
-    <pathelement location="${basedir}/lib/javax.persistence.jar"/>
-    <pathelement location="${basedir}/lib/javax.resource.jar"/>
-    <pathelement location="${basedir}/lib/javax.servlet.jar"/>
-    <pathelement location="${basedir}/lib/javax.servlet.jsp.jar"/>
-    <pathelement location="${basedir}/lib/javax.servlet.jsp.jstl.jar"/>
-    <pathelement location="${basedir}/lib/javax.transaction.jar"/>
-  </path>
-  
-  <path id="library.jsch-0.1.53.classpath">
-    <pathelement location="${basedir}/lib/jsch-0.1.53.jar"/>
-    <pathelement location="${basedir}/lib/commons-codec-1.10.jar"/>
-  </path>
-  
-  
-  <!-- Application Server Libraries -->
-  
-  <!-- Modules -->
-  
-  
-  <!-- Module jtransfer -->
-  
-  <dirname property="module.jtransfer.basedir" file="${ant.file}"/>
-  
-  
-  <property name="module.jdk.home.jtransfer" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.jtransfer" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.jtransfer" value="${project.jdk.classpath}"/>
-  
-  <property name="compiler.args.jtransfer" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
-  
-  <property name="jtransfer.output.dir" value="${module.jtransfer.basedir}/out/production/jtransfer"/>
-  <property name="jtransfer.testoutput.dir" value="${module.jtransfer.basedir}/out/test/jtransfer"/>
-  
-  <path id="jtransfer.module.bootclasspath">
-    <!-- Paths to be included in compilation bootclasspath -->
-  </path>
-  
-  <path id="jtransfer.module.production.classpath">
-    <path refid="${module.jdk.classpath.jtransfer}"/>
-    <path refid="library.java_ee_6-java_ee_6.classpath"/>
-    <path refid="library.jsch-0.1.53.classpath"/>
-  </path>
-  
-  <path id="jtransfer.runtime.production.module.classpath">
-    <pathelement location="${jtransfer.output.dir}"/>
-    <path refid="library.java_ee_6-java_ee_6.classpath"/>
-    <path refid="library.jsch-0.1.53.classpath"/>
-  </path>
-  
-  <path id="jtransfer.module.classpath">
-    <path refid="${module.jdk.classpath.jtransfer}"/>
-    <pathelement location="${jtransfer.output.dir}"/>
-    <path refid="library.java_ee_6-java_ee_6.classpath"/>
-    <path refid="library.jsch-0.1.53.classpath"/>
-  </path>
-  
-  <path id="jtransfer.runtime.module.classpath">
-    <pathelement location="${jtransfer.testoutput.dir}"/>
-    <pathelement location="${jtransfer.output.dir}"/>
-    <path refid="library.java_ee_6-java_ee_6.classpath"/>
-    <path refid="library.jsch-0.1.53.classpath"/>
-  </path>
-  
-  
-  <patternset id="excluded.from.module.jtransfer">
-    <patternset refid="ignored.files"/>
-  </patternset>
-  
-  <patternset id="excluded.from.compilation.jtransfer">
-    <patternset refid="excluded.from.module.jtransfer"/>
-  </patternset>
-  
-  <path id="jtransfer.module.sourcepath">
-    <dirset dir="${module.jtransfer.basedir}">
-      <include name="src"/>
-    </dirset>
-  </path>
-  
-  
-  <target name="compile.module.jtransfer" depends="compile.module.jtransfer.production,compile.module.jtransfer.tests" description="Compile module jtransfer"/>
-  
-  <target name="compile.module.jtransfer.production" description="Compile module jtransfer; production classes">
-    <mkdir dir="${jtransfer.output.dir}"/>
-    <javac destdir="${jtransfer.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.jtransfer}/javac">
-      <compilerarg line="${compiler.args.jtransfer}"/>
-      <bootclasspath refid="jtransfer.module.bootclasspath"/>
-      <classpath refid="jtransfer.module.production.classpath"/>
-      <src refid="jtransfer.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.jtransfer"/>
-    </javac>
-    
-    <copy todir="${jtransfer.output.dir}">
-      <fileset dir="${module.jtransfer.basedir}/src">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-    </copy>
-  </target>
-  
-  <target name="compile.module.jtransfer.tests" depends="compile.module.jtransfer.production" description="compile module jtransfer; test classes" unless="skip.tests"/>
-  
-  <target name="clean.module.jtransfer" description="cleanup module">
-    <delete dir="${jtransfer.output.dir}"/>
-    <delete dir="${jtransfer.testoutput.dir}"/>
-  </target>
-  
-  <target name="init" description="Build initialization">
-    <!-- Perform any build initialization in this target -->
-  </target>
-  
-  <target name="clean" depends="clean.module.jtransfer, clean.artifact.jtransfer:war_exploded" description="cleanup all"/>
-  
-  <target name="build.modules" depends="init, clean, compile.module.jtransfer" description="build all modules"/>
-  
-  <target name="init.artifacts">
-    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
-    <property name="artifact.output.jtransfer:war_exploded" value="${basedir}/out/artifacts/jtransfer_war_exploded"/>
-    <property name="artifact.output.jtransfer" value="${basedir}/out/artifacts/jtransfer"/>
-    <mkdir dir="${artifacts.temp.dir}"/>
-    <property name="temp.jar.path.jtransfer.war" value="${artifacts.temp.dir}/jtransfer.war"/>
-  </target>
-  
-  <target name="clean.artifact.jtransfer:war_exploded" description="clean jtransfer:war exploded artifact output">
-    <delete dir="${artifact.output.jtransfer:war_exploded}"/>
-  </target>
-  
-  <target name="artifact.jtransfer:war_exploded" depends="init.artifacts, compile.module.jtransfer" description="Build &#39;jtransfer:war exploded&#39; artifact">
-    <mkdir dir="${artifact.output.jtransfer:war_exploded}"/>
-    <copy todir="${artifact.output.jtransfer:war_exploded}">
-      <fileset dir="${basedir}/web"/>
-    </copy>
-    <mkdir dir="${artifact.output.jtransfer:war_exploded}/WEB-INF"/>
-    <copy file="${basedir}/web/WEB-INF/web.xml" tofile="${artifact.output.jtransfer:war_exploded}/WEB-INF/web.xml"/>
-    <mkdir dir="${artifact.output.jtransfer:war_exploded}/WEB-INF"/>
-    <mkdir dir="${artifact.output.jtransfer:war_exploded}/WEB-INF/classes"/>
-    <copy todir="${artifact.output.jtransfer:war_exploded}/WEB-INF/classes">
-      <fileset dir="${jtransfer.output.dir}"/>
-    </copy>
-  </target>
-  
-  <target name="artifact.jtransfer" depends="init.artifacts, compile.module.jtransfer" description="Build &#39;jtransfer&#39; artifact">
-    <property name="artifact.temp.output.jtransfer" value="${artifacts.temp.dir}/jtransfer"/>
-    <mkdir dir="${artifact.temp.output.jtransfer}"/>
-    <zip destfile="${temp.jar.path.jtransfer.war}">
-      <zipfileset dir="${jtransfer.output.dir}" prefix="WEB-INF/classes"/>
-      <zipfileset file="${basedir}/lib/javax.jms.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.servlet.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.servlet.jsp.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.annotation.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.transaction.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.resource.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.persistence.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.ejb.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/javax.servlet.jsp.jstl.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/jsch-0.1.53.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar" prefix="WEB-INF/lib"/>
-      <zipfileset file="${basedir}/lib/commons-codec-1.10.jar" prefix="WEB-INF/lib"/>
-      <zipfileset dir="${basedir}/web"/>
-      <zipfileset file="${basedir}/web/WEB-INF/web.xml" prefix="WEB-INF"/>
-    </zip>
-    <copy file="${temp.jar.path.jtransfer.war}" tofile="${artifact.temp.output.jtransfer}/jtransfer.war"/>
-  </target>
-  
-  <target name="build.all.artifacts" depends="artifact.jtransfer:war_exploded, artifact.jtransfer" description="Build all artifacts">
-    <mkdir dir="${artifact.output.jtransfer}"/>
-    <copy todir="${artifact.output.jtransfer}">
-      <fileset dir="${artifact.temp.output.jtransfer}"/>
-    </copy>
-    
-    <!-- Delete temporary files -->
-    <delete dir="${artifacts.temp.dir}"/>
-  </target>
-  
-  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="700m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/*.rbc/**"/>
+        <exclude name="**/*.yarb/**"/>
+        <exclude name="**/*~/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/.hg/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/__pycache__/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/vssver.scc/**"/>
+        <exclude name="**/vssver2.scc/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.egg"/>
+        <include name="*.jar"/>
+        <include name="*.ear"/>
+        <include name="*.apk"/>
+        <include name="*.swc"/>
+        <include name="*.war"/>
+        <include name="*.ane"/>
+        <include name="*.zip"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <exclude name="**/?*.java"/>
+        <exclude name="**/?*.form"/>
+        <exclude name="**/?*.class"/>
+        <exclude name="**/?*.groovy"/>
+        <exclude name="**/?*.scala"/>
+        <exclude name="**/?*.flex"/>
+        <exclude name="**/?*.kt"/>
+        <exclude name="**/?*.clj"/>
+        <exclude name="**/?*.aj"/>
+    </patternset>
+
+    <!-- JDK definitions -->
+
+    <property environment="env"/>
+    <property name="jdk.bin.1.8" value="${env.JAVA_HOME}/bin"/>
+    <path id="jdk.classpath.1.8">
+        <fileset dir="${env.JAVA_HOME}">
+            <include name="jre/lib/charsets.jar"/>
+            <include name="jre/lib/deploy.jar"/>
+            <include name="jre/lib/javaws.jar"/>
+            <include name="jre/lib/jce.jar"/>
+            <include name="jre/lib/jfr.jar"/>
+            <include name="jre/lib/jfxswt.jar"/>
+            <include name="jre/lib/jsse.jar"/>
+            <include name="jre/lib/management-agent.jar"/>
+            <include name="jre/lib/plugin.jar"/>
+            <include name="jre/lib/resources.jar"/>
+            <include name="jre/lib/rt.jar"/>
+            <include name="jre/lib/ext/access-bridge-32.jar"/>
+            <include name="jre/lib/ext/cldrdata.jar"/>
+            <include name="jre/lib/ext/dnsns.jar"/>
+            <include name="jre/lib/ext/jaccess.jar"/>
+            <include name="jre/lib/ext/jfxrt.jar"/>
+            <include name="jre/lib/ext/localedata.jar"/>
+            <include name="jre/lib/ext/nashorn.jar"/>
+            <include name="jre/lib/ext/sunec.jar"/>
+            <include name="jre/lib/ext/sunjce_provider.jar"/>
+            <include name="jre/lib/ext/sunmscapi.jar"/>
+            <include name="jre/lib/ext/sunpkcs11.jar"/>
+            <include name="jre/lib/ext/zipfs.jar"/>
+        </fileset>
+    </path>
+
+    <property name="project.jdk.home" value="${env.JAVA_HOME}"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+
+
+    <!-- Project Libraries -->
+
+    <path id="library.java_ee_6-java_ee_6.classpath">
+        <pathelement location="${basedir}/lib/javax.annotation.jar"/>
+        <pathelement location="${basedir}/lib/javax.ejb.jar"/>
+        <pathelement location="${basedir}/lib/javax.jms.jar"/>
+        <pathelement location="${basedir}/lib/javax.persistence.jar"/>
+        <pathelement location="${basedir}/lib/javax.resource.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jsp.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jsp.jstl.jar"/>
+        <pathelement location="${basedir}/lib/javax.transaction.jar"/>
+    </path>
+
+    <path id="library.jsch-0.1.53.classpath">
+        <pathelement location="${basedir}/lib/jsch-0.1.53.jar"/>
+        <pathelement location="${basedir}/lib/commons-codec-1.10.jar"/>
+    </path>
+
+
+    <!-- Application Server Libraries -->
+
+    <!-- Modules -->
+
+
+    <!-- Module jtransfer -->
+
+    <dirname property="module.jtransfer.basedir" file="${ant.file}"/>
+
+
+    <property name="module.jdk.home.jtransfer" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.jtransfer" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.jtransfer" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.jtransfer" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+
+    <property name="jtransfer.output.dir" value="${module.jtransfer.basedir}/out/production/jtransfer"/>
+    <property name="jtransfer.testoutput.dir" value="${module.jtransfer.basedir}/out/test/jtransfer"/>
+
+    <path id="jtransfer.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="jtransfer.module.production.classpath">
+        <path refid="${module.jdk.classpath.jtransfer}"/>
+        <path refid="library.java_ee_6-java_ee_6.classpath"/>
+        <path refid="library.jsch-0.1.53.classpath"/>
+    </path>
+
+    <path id="jtransfer.runtime.production.module.classpath">
+        <pathelement location="${jtransfer.output.dir}"/>
+        <path refid="library.java_ee_6-java_ee_6.classpath"/>
+        <path refid="library.jsch-0.1.53.classpath"/>
+    </path>
+
+    <path id="jtransfer.module.classpath">
+        <path refid="${module.jdk.classpath.jtransfer}"/>
+        <pathelement location="${jtransfer.output.dir}"/>
+        <path refid="library.java_ee_6-java_ee_6.classpath"/>
+        <path refid="library.jsch-0.1.53.classpath"/>
+    </path>
+
+    <path id="jtransfer.runtime.module.classpath">
+        <pathelement location="${jtransfer.testoutput.dir}"/>
+        <pathelement location="${jtransfer.output.dir}"/>
+        <path refid="library.java_ee_6-java_ee_6.classpath"/>
+        <path refid="library.jsch-0.1.53.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.jtransfer">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.jtransfer">
+        <patternset refid="excluded.from.module.jtransfer"/>
+    </patternset>
+
+    <path id="jtransfer.module.sourcepath">
+        <dirset dir="${module.jtransfer.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.jtransfer" depends="compile.module.jtransfer.production,compile.module.jtransfer.tests"
+            description="Compile module jtransfer"/>
+
+    <target name="compile.module.jtransfer.production" description="Compile module jtransfer; production classes">
+        <mkdir dir="${jtransfer.output.dir}"/>
+        <javac destdir="${jtransfer.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+               memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.jtransfer}/javac">
+            <compilerarg line="${compiler.args.jtransfer}"/>
+            <bootclasspath refid="jtransfer.module.bootclasspath"/>
+            <classpath refid="jtransfer.module.production.classpath"/>
+            <src refid="jtransfer.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.jtransfer"/>
+        </javac>
+
+        <copy todir="${jtransfer.output.dir}">
+            <fileset dir="${module.jtransfer.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.jtransfer.tests" depends="compile.module.jtransfer.production"
+            description="compile module jtransfer; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.jtransfer" description="cleanup module">
+        <delete dir="${jtransfer.output.dir}"/>
+        <delete dir="${jtransfer.testoutput.dir}"/>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="clean" depends="clean.module.jtransfer, clean.artifact.jtransfer:war_exploded"
+            description="cleanup all"/>
+
+    <target name="build.modules" depends="init, clean, compile.module.jtransfer" description="build all modules"/>
+
+    <target name="init.artifacts">
+        <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+        <property name="artifact.output.jtransfer:war_exploded"
+                  value="${basedir}/out/artifacts/jtransfer_war_exploded"/>
+        <property name="artifact.output.jtransfer" value="${basedir}/out/artifacts/jtransfer"/>
+        <mkdir dir="${artifacts.temp.dir}"/>
+        <property name="temp.jar.path.jtransfer.war" value="${artifacts.temp.dir}/jtransfer.war"/>
+    </target>
+
+    <target name="clean.artifact.jtransfer:war_exploded" description="clean jtransfer:war exploded artifact output">
+        <delete dir="${artifact.output.jtransfer:war_exploded}"/>
+    </target>
+
+    <target name="artifact.jtransfer:war_exploded" depends="init.artifacts, compile.module.jtransfer"
+            description="Build &#39;jtransfer:war exploded&#39; artifact">
+        <mkdir dir="${artifact.output.jtransfer:war_exploded}"/>
+        <copy todir="${artifact.output.jtransfer:war_exploded}">
+            <fileset dir="${basedir}/web/build"/>
+        </copy>
+        <exec executable="npm.cmd" dir="${basedir}/web">
+            <arg value="run"/>
+            <arg value="build"/>
+        </exec>
+        <move file="${basedir}/web/build/index.html" tofile="${basedir}/web/build/files.jsp"/>
+
+        <mkdir dir="${artifact.output.jtransfer:war_exploded}/WEB-INF"/>
+        <copy file="${basedir}/web/build/WEB-INF/web.xml" tofile="${artifact.output.jtransfer:war_exploded}/WEB-INF/web.xml"/>
+        <mkdir dir="${artifact.output.jtransfer:war_exploded}/WEB-INF"/>
+        <mkdir dir="${artifact.output.jtransfer:war_exploded}/WEB-INF/classes"/>
+        <copy todir="${artifact.output.jtransfer:war_exploded}/WEB-INF/classes">
+            <fileset dir="${jtransfer.output.dir}"/>
+        </copy>
+    </target>
+
+    <target name="artifact.jtransfer" depends="init.artifacts, compile.module.jtransfer"
+            description="Build &#39;jtransfer&#39; artifact">
+        <property name="artifact.temp.output.jtransfer" value="${artifacts.temp.dir}/jtransfer"/>
+        <mkdir dir="${artifact.temp.output.jtransfer}"/>
+        <exec executable="npm.cmd" dir="${basedir}/web">
+            <arg value="run"/>
+            <arg value="build"/>
+        </exec>
+        <move file="${basedir}/web/build/index.html" tofile="${basedir}/web/build/files.jsp"/>
+        <zip destfile="${temp.jar.path.jtransfer.war}">
+            <zipfileset dir="${jtransfer.output.dir}" prefix="WEB-INF/classes"/>
+            <zipfileset file="${basedir}/lib/javax.jms.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.servlet.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.servlet.jsp.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.annotation.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.transaction.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.resource.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.persistence.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.ejb.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/javax.servlet.jsp.jstl.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/jsch-0.1.53.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/mysql-connector-java-5.1.38-bin.jar" prefix="WEB-INF/lib"/>
+            <zipfileset file="${basedir}/lib/commons-codec-1.10.jar" prefix="WEB-INF/lib"/>
+            <zipfileset dir="${basedir}/web/build"/>
+            <zipfileset file="${basedir}/web/build/WEB-INF/web.xml" prefix="WEB-INF"/>
+        </zip>
+        <copy file="${temp.jar.path.jtransfer.war}" tofile="${artifact.temp.output.jtransfer}/jtransfer.war"/>
+    </target>
+
+    <target name="build.all.artifacts" depends="artifact.jtransfer:war_exploded, artifact.jtransfer"
+            description="Build all artifacts">
+        <mkdir dir="${artifact.output.jtransfer}"/>
+        <copy todir="${artifact.output.jtransfer}">
+            <fileset dir="${artifact.temp.output.jtransfer}"/>
+        </copy>
+
+        <!-- Delete temporary files -->
+        <delete dir="${artifacts.temp.dir}"/>
+    </target>
+
+    <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
 </project>
