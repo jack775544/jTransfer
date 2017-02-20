@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.items {
+    list-style-type: none;
+}
+
+.items > li {
+    float: left;
+    height: 120px;
+    width: 100px;
+    margin: 5px;
+    background-color: #c9cac6;
+    border-radius: 5px;
+}
+
+.item > a {
+    display: block;
+    /* Height is above height - 4*/
+    height: 116px;
+    width: 100px;
+    padding: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item > a > img {
+    height: 96px;
+    width: 96px;
+}
+
+.item:hover {
+    background-color: #888a85;
+}
